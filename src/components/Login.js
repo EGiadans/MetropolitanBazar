@@ -1,6 +1,9 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 class Login extends React.Component {
+    handleLogin() {
+    }
     render () {
         return(
             <section
@@ -9,7 +12,7 @@ class Login extends React.Component {
                     backgroundPosition: 'center',
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
-                    backgroundImage: 'url('+'https://dam.muyinteresante.com.mx/wp-content/uploads/2020/02/Tampico.png'+')'
+                    backgroundImage: 'url(https://www.visitmexico.com/viajemospormexico/assets/uploads/destinos/tamaulipas_destinos-principales_tampico_04.jpg)'
                 }}>
                 <div className="container">
                     <div className="row">
@@ -20,9 +23,10 @@ class Login extends React.Component {
                                      backgroundColor: 'white',
                                      borderRadius: 10,
                                      width: '35%',
-                                     height: '60vh'
+                                     height: '60vh',
+                                     textAlign: 'center'
                                  }}>
-                                <form>
+                                <form onSubmit={this.handleLogin}>
                                     <div className="py-5">
                                         <h1 className="mb-5">Iniciar Sesión</h1>
                                         <div className="form-group">
@@ -31,10 +35,13 @@ class Login extends React.Component {
                                         <div className="form-group">
                                             <input type="password" placeholder='Contraseña' style={{width: '70%'}}/>
                                         </div>
-                                        <button type="submit" className="btn btn-primary mt-5" style={{width: '45%'}}>Iniciar</button>
+                                        <button type="submit" className="btn mt-5" style={{width: '45%', backgroundColor: '#80ffcc', color: 'white'}}>
+                                            <Link to="/profile" style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>Iniciar</Link>
+                                        </button>
                                     </div>
                                 </form>
-                                <h6>¿Aún no tienes cuenta?</h6><a href="https://www.wikipedia.org">Registrate</a>
+                                <h6 className="text-center">¿Aún no tienes cuenta?</h6>
+                                <Link to="/signup" style={{color: '#80ffcc', fontWeight: 'bold', fontSize: 20}}>Registrate</Link>
                             </div>
                         </div>
                     </div>

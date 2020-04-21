@@ -1,13 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Login from './components/Login';
+import Signup from './components/Signup';
+import Profile from './components/Profile';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route
+} from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <Login />
-    </div>
+      <Router>
+          <Switch>
+              <Route path="/signup" component={Signup}/>
+              <Route path="/profile" component={Profile}/>
+              <Route path="/" component={Login}/>
+          </Switch>
+      </Router>
   );
 }
 
