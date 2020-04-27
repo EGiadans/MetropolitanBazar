@@ -3,6 +3,8 @@ import './App.css';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Profile from './components/Profile';
+import Sales from './components/Sales';
+import Purchases from './components/Purchases'
 import {
     BrowserRouter as Router,
     Switch,
@@ -11,13 +13,19 @@ import {
 
 function App() {
   return (
-      <Router>
-          <Switch>
-              <Route path="/signup" component={Signup}/>
-              <Route path="/profile" component={Profile}/>
-              <Route path="/" component={Login}/>
-          </Switch>
-      </Router>
+      <>
+          <div>
+              <Router>
+                  <Switch>
+                      <Route path="/signup" component={Signup}/>
+                      <Route path="/profile" component={Profile}/>
+                      <Route path="/sales" component={Sales}/>
+                      <Route path="/purchases" component={Purchases}/>
+                      <Route path="/" component={Login}/>
+                  </Switch>
+              </Router>
+          </div>
+      </>
   );
 }
 

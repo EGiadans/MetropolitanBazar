@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import NavBar from "./NavBar";
 
 class Login extends React.Component {
     handleLogin() {
     }
     render () {
         return(
+            <>
             <section
                 style={{
                     height: '100vh',
@@ -14,12 +16,13 @@ class Login extends React.Component {
                     backgroundRepeat: 'no-repeat',
                     backgroundImage: 'url(https://www.visitmexico.com/viajemospormexico/assets/uploads/destinos/tamaulipas_destinos-principales_tampico_04.jpg)'
                 }}>
+                <NavBar searchVisible={true}/>
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-12">
                             <div className="mx-auto"
                                  style={{
-                                     marginTop: '20%',
+                                     marginTop: '10%',
                                      backgroundColor: 'white',
                                      borderRadius: 10,
                                      width: '35%',
@@ -47,6 +50,7 @@ class Login extends React.Component {
                     </div>
                 </div>
             </section>
+            </>
         );
     }
 }
