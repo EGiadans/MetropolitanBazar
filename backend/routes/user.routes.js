@@ -11,8 +11,20 @@ router.route('/create-user').post((req, res, next) => {
     if (error) {
       return next(error)
     } else {
-      console.log(data)
-      res.json(data)
+      const user = new User({
+        name: req.body.title,
+        email: req.body.email
+      });
+      user.save()
+        .exec()
+        .then(data => {
+          res.json(data);
+        })
+        .catch(err => {
+          res.json({
+            message: err
+          });
+        })
     }
   })
 });
@@ -23,7 +35,7 @@ router.route('/').get((req, res) => {
     if (error) {
       return next(error)
     } else {
-      res.json(data)
+      res.json(users)
     }
   })
 })
