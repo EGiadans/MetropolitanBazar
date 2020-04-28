@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 
-const MyInfo = ({name, phone, email, password}) => (
+const MyInfo = ({name, email, password}) => (
     <div className="container bg-light">
         <div className="row">
             <div className="col-sm-3">
@@ -15,16 +15,13 @@ const MyInfo = ({name, phone, email, password}) => (
             <div className="col-sm-9">
                 <form className="mx-5 my-5">
                     <label>Nombre</label>
-                    <input placeholder="Nombre completo" style={{width: '90%'}} value={name}/>
-
-                    <label>Teléfono </label>
-                    <input placeholder="Eduardo" style={{width: '90%'}}/>
+                    <input readOnly placeholder={name} style={{width: '90%'}} value={name}/>
 
                     <label>Correo electrónico </label>
-                    <input placeholder="Eduardo" style={{width: '80%'}}/>
+                    <input readOnly placeholder={email} style={{width: '80%'}} value={email}/>
 
                     <label>Contraseña </label>
-                    <input placeholder="Eduardo" style={{width: '60%'}}/>
+                    <input readOnly type='password' placeholder={password} value={password} style={{width: '60%'}}/>
                     <Button className="btn-primary">Cambiar</Button>
                 </form>
             </div>

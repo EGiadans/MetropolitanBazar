@@ -1,48 +1,47 @@
 let mongoose = require('mongoose'),
-  express = require('express'),
-  router = express.Router();
+express = require('express'),
+router = express.Router();
 
 // User Model
 let userSchema = require('../models/User');
 
 // CREATE User
-router.route('/create-user').post((req, res, next) => {
+router.route('/create-user').post((req, res) => {
   userSchema.create(req.body, (error, data) => {
     if (error) {
       return next(error)
     } else {
-      const user = new User({
-        name: req.body.title,
-        email: req.body.email
-      });
-      user.save()
-        .exec()
-        .then(data => {
-          res.json(data);
-        })
-        .catch(err => {
-          res.json({
-            message: err
-          });
-        })
+      console.log(data)
+      res.json(data)
     }
   })
 });
 
-// READ User
-router.route('/').get((req, res) => {
-  userSchema.find((error, data) => {
+//LOGIN user
+router.route('/login-user').post((req, res) => {
+  userSchema.find({email: req.body.email, hashpassword: req.body.password}, (error, data) => {
+    if (data) {
+      console.log(data)
+    } else {
+      res.error
+      
+    }
+  })
+});
+
+router.route('/profile').get((req, res) => {
+  userSchema.find({email: 'riveratwister2@gmail.com', hashpassword: 'test'}, (error, data) => {
     if (error) {
       return next(error)
     } else {
-      res.json(users)
+      res.json(data)
     }
   })
 })
 
-// Get Single User
-router.route('/edit-user/:id').get((req, res) => {
-  userSchema.findById(req.params.id, (error, data) => {
+// READ User
+router.route('/').get((req, res) => {
+  userSchema.find((error, data) => {
     if (error) {
       return next(error)
     } else {
@@ -59,7 +58,6 @@ router.route('/update-user/:id').put((req, res, next) => {
   }, (error, data) => {
     if (error) {
       return next(error);
-      console.log(error)
     } else {
       res.json(data)
       console.log('User updated successfully !')
