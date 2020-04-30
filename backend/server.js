@@ -6,6 +6,7 @@ let dbConfig = require('./database/db');
 
 // Express Route
 const userRoute = require('../backend/routes/user.route');
+const productRoute = require('../backend/routes/product.route');
 
 // Connecting mongoDB Database
 mongoose.Promise = global.Promise;
@@ -15,9 +16,9 @@ mongoose.connect(dbConfig.db, {
         console.log('Database sucessfully connected!')
     },
     error => {
-        console.log('Could not connect to database : ' + error)
+        console.log('Could not connect to Database : ' + error)
     }
-)
+);
 
 const app = express();
 app.use(bodyParser.json());
@@ -25,14 +26,15 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(cors());
-app.use('/', userRoute)
+app.use('/users', userRoute);
+app.use('/products', productRoute);
 
 
 // PORT
 const port = process.env.PORT || 4000;
 const server = app.listen(port, () => {
     console.log('Connected to port ' + port)
-})
+});
 
 // 404 Error
 app.use((req, res, next) => {
