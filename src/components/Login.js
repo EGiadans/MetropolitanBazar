@@ -39,7 +39,7 @@ class Login extends React.Component {
                                             <input type="password" placeholder='Contraseña' style={{width: '70%'}}/>
                                         </div>
                                         <button type="submit" className="btn mt-5" style={{width: '45%', backgroundColor: '#80ffcc', color: 'white'}}>
-                                            <Link to="/profile" style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>Iniciar</Link>
+                                            <Link to="/feed" style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>Iniciar</Link>
                                         </button>
                                     </div>
                                 </form>

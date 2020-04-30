@@ -5,6 +5,7 @@ import Signup from './components/Signup';
 import Profile from './components/Profile';
 import Sales from './components/Sales';
 import Purchases from './components/Purchases'
+import Feed from './components/Feed';
 import {
     BrowserRouter as Router,
     Switch,
@@ -17,6 +18,7 @@ function App() {
           <div>
               <Router>
                   <Switch>
+                      <Route path="/feed" component={Feed}/>
                       <Route path="/signup" component={Signup}/>
                       <Route path="/profile" component={Profile}/>
                       <Route path="/sales" component={Sales}/>

@@ -4,7 +4,7 @@ import { Navbar, Nav, FormControl, Button, Form } from "react-bootstrap";
 const NavBar = ({searchVisible}) => (
     <Navbar expand="lg" style={{backgroundColor: '#80ffcc'}}>
         <div className="container">
-            <Navbar.Brand href="#home">Metropolitan Bazar</Navbar.Brand>
+            <Navbar.Brand href="/feed">Metropolitan Bazar</Navbar.Brand>
             <div hidden={searchVisible}>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
