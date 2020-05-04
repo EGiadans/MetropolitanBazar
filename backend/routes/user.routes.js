@@ -20,11 +20,11 @@ router.route('/create-user').post((req, res) => {
 //LOGIN user
 router.route('/login-user').post((req, res) => {
   userSchema.find({email: req.body.email, hashpassword: req.body.password}, (error, data) => {
-    if (data) {
+    if (data.length) {
       console.log(data)
+      res.json(data)
     } else {
-      res.error
-      
+      res.sendStatus(404)
     }
   })
 });
