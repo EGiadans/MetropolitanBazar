@@ -41,11 +41,9 @@ class Login extends React.Component {
 
         axios.post('http://localhost:4000/user/login-user', user)
         .then( res => {
-            if (res.status === 200) {
-                this.props.history.push("/profile")
-            } else {
-                alert('El email o password son incorrectos')
-            }
+            this.props.history.push("/profile")})
+        .catch(() => {
+            alert('El email o password son incorrectos')
         });
     }
     render () {
