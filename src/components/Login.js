@@ -85,6 +85,7 @@ class Login extends React.Component {
                                             <input required value = {this.state.password} onChange = {this.onChangePassword.bind(this)} type="password" placeholder='Contraseña' style={{width: '70%'}}/>
                                         </div>
                                         <button  type="submit" className="btn mt-5" style={{width: '45%', backgroundColor: '#80ffcc', color: 'white'}}>
+                                        Iniciar Sesion
                                         </button>
                                     </div>
                                 </form>
