@@ -44,7 +44,7 @@ class Login extends React.Component {
             this.props.history.push({
                 pathname: '/profile',
                 state: { email: this.state.email,
-                        password: this.state.password }
+                    }
                 })
             })
         .catch(() => {

@@ -21,7 +21,6 @@ router.route('/create-user').post((req, res) => {
 router.route('/login-user').post((req, res) => {
   userSchema.find({email: req.body.email, hashpassword: req.body.password}, (error, data) => {
     if (data.length) {
-      console.log(data)
       res.json(data)
     } else {
       res.sendStatus(404)
@@ -30,11 +29,10 @@ router.route('/login-user').post((req, res) => {
 });
 
 router.route('/profile').get((req, res) => {
-  userSchema.find({email: req.params.email, hashpassword: req.params.password}, (error, data) => {
+  userSchema.find({email: req.query.email}, (error, data) => {
     if (error) {
       return next(error)
     } else {
-      console.log(req.params)
       res.json(data)
     }
   })

@@ -18,12 +18,13 @@ class Profile extends React.Component {
 
 
     componentDidMount() {
-        const user = {
-            email: this.props.location.state.email,
-            password: this.props.location.state.password,
-        }
-        console.log(user)
-        axios.get('http://localhost:4000/user/profile', user)
+        const hemail = this.props.location.state.email
+        console.log(hemail)
+        axios.get('http://localhost:4000/user/profile', {
+            params: {
+                email: hemail
+            }
+        })
             .then(response => {
                 console.log(response)
                 this.setState({ 
