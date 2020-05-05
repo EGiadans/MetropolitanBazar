@@ -41,7 +41,12 @@ class Login extends React.Component {
 
         axios.post('http://localhost:4000/user/login-user', user)
         .then( res => {
-            this.props.history.push("/profile")})
+            this.props.history.push({
+                pathname: '/profile',
+                state: { email: this.state.email,
+                        password: this.state.password }
+                })
+            })
         .catch(() => {
             alert('El email o password son incorrectos')
         });

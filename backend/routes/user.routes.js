@@ -30,10 +30,11 @@ router.route('/login-user').post((req, res) => {
 });
 
 router.route('/profile').get((req, res) => {
-  userSchema.find({email: 'riveratwister2@gmail.com', hashpassword: 'test'}, (error, data) => {
+  userSchema.find({email: req.params.email, hashpassword: req.params.password}, (error, data) => {
     if (error) {
       return next(error)
     } else {
+      console.log(req.params)
       res.json(data)
     }
   })
