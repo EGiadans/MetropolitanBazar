@@ -1,9 +1,55 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
+import axios from 'axios';
 
 class Login extends React.Component {
-    handleLogin() {
+    constructor(props) {
+        super(props);
+
+        this.onChangeEmail = this.onChangeEmail.bind(this);
+        this.onChangePassword = this.onChangePassword.bind(this);
+
+
+        this.state = {
+            email: '',
+            password: ''
+        }
+    }
+
+    onChangeEmail= (e) =>{
+        this.setState({
+            email: e.target.value
+        });
+    }
+
+    onChangePassword = (e) =>{
+        this.setState({
+            password: e.target.value
+        });
+    }
+
+    goToProfile = (e) =>{
+
+        e.preventDefault();
+        const user = {
+            email: this.state.email,
+            password: this.state.password,
+        }
+
+        console.log(user);
+
+        axios.post('http://localhost:4000/user/login-user', user)
+        .then( res => {
+            this.props.history.push({
+                pathname: '/profile',
+                state: { email: this.state.email,
+                    }
+                })
+            })
+        .catch(() => {
+            alert('El email o password son incorrectos')
+        });
     }
     render () {
         return(
@@ -29,17 +75,17 @@ class Login extends React.Component {
                                      height: '60vh',
                                      textAlign: 'center'
                                  }}>
-                                <form onSubmit={this.handleLogin}>
+                                <form onSubmit={this.goToProfile}>
                                     <div className="py-5">
                                         <h1 className="mb-5">Iniciar Sesión</h1>
                                         <div className="form-group">
-                                            <input type="email" placeholder='Email' style={{width: '70%'}}/>
+                                            <input required value = {this.state.email} onChange = {this.onChangeEmail.bind(this)} type="email" placeholder='Email' style={{width: '70%'}}/>
                                         </div>
                                         <div className="form-group">
-                                            <input type="password" placeholder='Contraseña' style={{width: '70%'}}/>
+                                            <input required value = {this.state.password} onChange = {this.onChangePassword.bind(this)} type="password" placeholder='Contraseña' style={{width: '70%'}}/>
                                         </div>
-                                        <button type="submit" className="btn mt-5" style={{width: '45%', backgroundColor: '#80ffcc', color: 'white'}}>
-                                            <Link to="/feed" style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>Iniciar</Link>
+                                        <button  type="submit" className="btn mt-5" style={{width: '45%', backgroundColor: '#80ffcc', color: 'white'}}>
+                                        Iniciar Sesion
                                         </button>
                                     </div>
                                 </form>

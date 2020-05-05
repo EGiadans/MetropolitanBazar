@@ -1,7 +1,89 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-
+import axios from 'axios';
 class Signup extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.onChangeName = this.onChangeName.bind(this);
+        this.onChangeLastName = this.onChangeLastName.bind(this);
+        this.onChangeUserName = this.onChangeUserName.bind(this);
+        this.onChangeEmail = this.onChangeEmail.bind(this);
+        this.onChangeHashpassword = this.onChangeHashpassword.bind(this);
+        this.onChangeCpassword = this.onChangeCpassword.bind(this);
+
+
+        this.state = {
+            name: '',
+            lastname: '',
+            username: '',
+            email: '',
+            hashpassword: '',
+            cpassword:''
+        }
+    }
+
+    onChangeName = (e) => {
+        this.setState({
+            name: e.target.value
+        });
+    }
+
+    onChangeLastName= (e) =>{
+        this.setState({
+            lastname: e.target.value
+        });
+    }
+
+    onChangeUserName= (e) =>{
+        this.setState({
+            username: e.target.value
+        });
+    }
+
+    onChangeEmail= (e) =>{
+        this.setState({
+            email: e.target.value
+        });
+    }
+
+    onChangeHashpassword = (e) =>{
+        this.setState({
+            hashpassword: e.target.value
+        });
+    }
+
+    onChangeCpassword = (e) =>{
+        this.setState({
+            cpassword: e.target.value
+        });
+    }
+
+
+    
+
+    onSubmit = (e) =>{
+        if (this.state.hashpassword !== this.state.cpassword){
+            alert('Passwords dont match')
+        } else {
+        
+        e.preventDefault();
+        const user = {
+            name: this.state.name,
+            lastname: this.state.lastname,
+            username: this.state.username,
+            email: this.state.email,
+            hashpassword: this.state.hashpassword,
+        }
+
+        console.log(user);
+        
+        axios.post('http://localhost:4000/user/create-user', user)
+        .then(res => console.log(res.data));
+    }
+    }
+
     render () {
         return(
             <section className="overflow-hidden"
@@ -27,23 +109,26 @@ class Signup extends React.Component {
                                      height: '100vh',
                                      marginLeft: '20%'
                                  }}>
-                                <form>
+                                <form onSubmit={this.onSubmit}>
                                     <div className="py-5">
                                         <h1 className="mb-5 my-5">Ingresa tus datos</h1>
                                         <div className="form-group">
-                                            <input type="text" placeholder='Nombre' style={{width: '70%'}}/>
+                                            <input required value = {this.state.username} onChange = {this.onChangeUserName.bind(this)} type="text" placeholder='Username' style={{width: '70%'}}/>
                                         </div>
                                         <div className="form-group">
-                                            <input type="text" placeholder='Apellidos' style={{width: '70%'}}/>
+                                            <input required value = {this.state.name} onChange = {this.onChangeName.bind(this)} type="text" placeholder='Nombre' style={{width: '70%'}}/>
                                         </div>
                                         <div className="form-group">
-                                            <input type="email" placeholder='Email' style={{width: '70%'}}/>
+                                            <input required value = {this.state.lastname} onChange = {this.onChangeLastName.bind(this)} type="text" placeholder='Apellidos' style={{width: '70%'}}/>
                                         </div>
                                         <div className="form-group">
-                                            <input type="password" placeholder='Contraseña' style={{width: '70%'}}/>
+                                            <input required value = {this.state.email} onChange = {this.onChangeEmail.bind(this)} type="email" placeholder='Email' style={{width: '70%'}}/>
                                         </div>
                                         <div className="form-group">
-                                            <input type="password" placeholder='Confirma tu contraseña' style={{width: '70%'}}/>
+                                            <input required value = {this.state.hashpassword} onChange = {this.onChangeHashpassword.bind(this)} type="password" placeholder='Contraseña' style={{width: '70%'}}/>
+                                        </div>
+                                        <div className="form-group">
+                                            <input required value = {this.state.cpassword} onChange = {this.onChangeCpassword.bind(this)} type="password" placeholder='Confirmar Contraseña' style={{width: '70%'}}/>
                                         </div>
 
                                         <button type="submit" className="btn mt-5"
