@@ -5,8 +5,8 @@ let bodyParser = require('body-parser');
 let dbConfig = require('./database/db');
 
 // Express Route
-const userRoute = require('../backend/routes/user.route');
-const productRoute = require('../backend/routes/product.route');
+const userRoute = require('../backend/routes/user.routes');
+const productRoute = require('./routes/product.routes');
 
 // Connecting mongoDB Database
 mongoose.Promise = global.Promise;
@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(cors());
-app.use('/users', userRoute);
+app.use('/user', userRoute);
 app.use('/products', productRoute);
 
 
