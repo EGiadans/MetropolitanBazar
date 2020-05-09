@@ -8,13 +8,30 @@ import MyDocs from "./MyDocs";
 class Profile extends React.Component {
     constructor(props) {
         super(props);
+        
 
         this.state = {
                 name: '',
                 lastname: '',
                 email: '',
-                password: ''
+                password: '',
+                acta: ''
         };
+    }
+
+    myCallback = (actaN) => {
+        this.setState({ acta: actaN });
+        this.SubmitActa()
+    }
+   
+    SubmitActa = () => {
+        const formData = new FormData()
+        formData.append('email', this.state.email)
+        formData.append('acta', this.state.acta)
+        axios.post("http://localhost:4000/user/user-acta", formData, {
+        }).then(res => {
+            console.log(res)
+        })  
     }
 
 
@@ -51,7 +68,7 @@ class Profile extends React.Component {
                             <MyInfo name={this.state.name} lastname={this.state.lastname} email={this.state.email} password={this.state.password}/>
                         </Tab>
                         <Tab eventKey="docs" title="Mis Documentos">
-                            <MyDocs />
+                            <MyDocs callbackFromParent={this.myCallback} />
                         </Tab>
                         <Tab eventKey="payments" title="Mis Pagos">
                             <h1>Payments</h1>

@@ -16,6 +16,18 @@ router.route('/create-user').post((req, res) => {
     }
   })
 });
+//add acta to user
+router.route('/user-acta').post((req, res) => {
+  var query = {'email': req.body.email};
+  userSchema.findOneAndUpdate(query, req.body.acta, (error, data) => {
+    if (error) {
+      return next(error)
+    } else {
+      console.log(data)
+      res.json(data)
+    }
+  })
+});
 
 //LOGIN user
 router.route('/login-user').post((req, res) => {
