@@ -4,47 +4,56 @@ import {Tab, Tabs } from "react-bootstrap";
 import MyInfo from "./MyInfo";
 import axios from 'axios';
 import MyDocs from "./MyDocs";
+import Button from "react-bootstrap/Button";
+
 
 class Profile extends React.Component {
     constructor(props) {
         super(props);
         
-
         this.state = {
                 name: '',
                 lastname: '',
                 email: '',
                 password: '',
-                acta: ''
+                acta: null
         };
+        this.onActaSubmit = this.onActaSubmit.bind(this);
+        this.onActaChange = this.onActaChange.bind(this);
     }
 
-    myCallback = (actaN) => {
-        this.setState({ acta: actaN });
-        this.SubmitActa()
-    }
-   
-    SubmitActa = () => {
-        const formData = new FormData()
-        formData.append('email', this.state.email)
-        formData.append('acta', this.state.acta)
-        axios.post("http://localhost:4000/user/user-acta", formData, {
-        }).then(res => {
-            console.log(res)
-        })  
+    onActaChange(e){
+        this.setState({
+            acta: e.target.files
+        })
+        console.log(e.target.files[0])
     }
 
+    onActaSubmit(e){
+        e.preventDefault()
+        console.log('intento de subida')
+        var formData = new FormData();
+        formData.append('acta',this.state.acta);
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        };
+        axios.post("http://localhost:4000/user/acta",formData)
+            .then((response) => {
+                alert("The file was successfully uploaded");
+            }).catch((error) => {
+        });
+    }
 
     componentDidMount() {
         const hemail = this.props.location.state.email
-        console.log(hemail)
         axios.get('http://localhost:4000/user/profile', {
             params: {
                 email: hemail
             }
         })
             .then(response => {
-                console.log(response)
                 this.setState({
                     name: response.data[0].name,
                     lastname: response.data[0].lastname,
@@ -68,7 +77,24 @@ class Profile extends React.Component {
                             <MyInfo name={this.state.name} lastname={this.state.lastname} email={this.state.email} password={this.state.password}/>
                         </Tab>
                         <Tab eventKey="docs" title="Mis Documentos">
-                            <MyDocs callbackFromParent={this.myCallback} />
+                        <div className="container bg-light">
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <h1 className="my-5">Carga de documentos oficiales <i className="fas fa-file-signature" /></h1>
+                                    <h4>Esta sección te permite proporcionar tus documentos oficiales para demostrar tu confiabilidad a otros
+                                    usuarios de la plataforma.</h4>
+                                    <h5 className="my-5">Tranquilo, nadie más los podrá ver además de ti.</h5>
+                                    <form onSubmit ={this.onActaSubmit}>
+                                        <div className="row my-5 mx-5">
+                                            <h5>&nbsp;Acta de nacimiento </h5>&nbsp;<input name={'myActa'} onChange={this.onActaChange} type="file"/> <Button type = 'submit'>Enviar</Button>
+                                        </div>
+                                    </form>
+                                    <div className="row my-5 mx-5">
+                                        <h5><i className="fas fa-times" style={{color: 'red'}}/>&nbsp;Credencial de elector </h5>&nbsp;<input type="file" /> <Button>Enviar</Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         </Tab>
                         <Tab eventKey="payments" title="Mis Pagos">
                             <h1>Payments</h1>

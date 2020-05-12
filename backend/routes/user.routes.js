@@ -1,6 +1,41 @@
-let mongoose = require('mongoose'),
-express = require('express'),
+let mongoose = require('mongoose');
+express = require('express');
+bodyParser = require('body-parser');
 router = express.Router();
+const multer = require("multer");
+path = require('path');
+app = express()
+app.use(bodyParser.urlencoded({extended: true}))
+//file upload
+
+const storage = multer.diskStorage({
+  destination: function(req, file, cb){
+    cb(null, 'public');
+  },
+  filename: function(req, file, cb){
+    cb(null, "FILE-" + Date.now() + path.extname(file.originalname));
+  }
+});
+
+upload = multer({storage}).single('acta');
+
+const obj = (req,res) => {
+  upload(req, res, () => {
+     console.log("Request ---", req.body);
+     console.log("Request file ---", req.file); //Here you get file.
+     var query = {'email': req.body.user}
+     userSchema.findOneAndUpdate({'email': 'riveratwister2@gmail.com'},{acta: req.body.acta}, (error, data) => {
+      if (error) {
+        return next(error)
+      } else {
+        console.log(data)
+        res.json(data)
+      }
+     })
+  });
+}
+
+router.post("/acta", obj);
 
 // User Model
 let userSchema = require('../models/User');
@@ -8,18 +43,6 @@ let userSchema = require('../models/User');
 // CREATE User
 router.route('/create-user').post((req, res) => {
   userSchema.create(req.body, (error, data) => {
-    if (error) {
-      return next(error)
-    } else {
-      console.log(data)
-      res.json(data)
-    }
-  })
-});
-//add acta to user
-router.route('/user-acta').post((req, res) => {
-  var query = {'email': req.body.email};
-  userSchema.findOneAndUpdate(query, req.body.acta, (error, data) => {
     if (error) {
       return next(error)
     } else {
