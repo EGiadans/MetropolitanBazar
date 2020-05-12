@@ -3,6 +3,8 @@ import Navbar from "./NavBar";
 import axios from "axios";
 import Table from 'react-bootstrap/Table';
 import Button from "react-bootstrap/Button";
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 class Profile extends React.Component {
     constructor(props) {
@@ -11,6 +13,15 @@ class Profile extends React.Component {
             products: []
         };
     }
+
+    redirectTo = (productId) => {
+        this.props.history.push({
+            pathname: `/product/${productId}`,
+            state: {
+                from: '/feed'
+            }
+        })
+    };
 
     componentDidMount() {
         axios.get('http://localhost:4000/products/')
@@ -24,10 +35,16 @@ class Profile extends React.Component {
             });
     }
 
+    showWishList = () => {
+      //NotificationManager.warning('Listo', 'Agregado a tu wishlist', 10000);
+        NotificationManager.success('Listo', 'Agregado a tu wishlist');
+    };
+
     render() {
         const { products } = this.state;
         return (
             <>
+                <NotificationContainer/>
                 <Navbar></Navbar>
                 <div className="container">
                     <div className="row">
@@ -69,8 +86,9 @@ class Profile extends React.Component {
                                                     <img alt="img" src={product.url3} style={{maxWidth: '30%'}}/>
                                                 </td>
                                                 <td>
-                                                    <Button>Ver este producto</Button>
-                                                    <Button className="mt-2">Añadir a Wishlist</Button>
+                                                    <Button onClick={() => this.redirectTo(product._id)}>Ver este producto</Button>
+                                                    <Button onClick={() => this.showWishList()} className="btn-warning mt-2"><i className="fas fa-star"/>
+                                                        &nbsp;Agregar a Wishlist</Button>
                                                 </td>
                                             </tr>
                                         );

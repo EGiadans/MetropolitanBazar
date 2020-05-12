@@ -13,6 +13,12 @@ let productSchema = new Schema({
     },
     price : {
         type: Number
+    },
+    date : {
+        type: Date
+    },
+    file1 : {
+        type: String
     }
 }, {
     collection: 'products'
