@@ -17,7 +17,6 @@ cloudinary.config({
 });
 
 router.route('/image-upload').post((req, res) => {
-    console.log(req.files);
     const values = Object.values(req.files);
     const promises = values.map(image => cloudinary.uploader.upload(image.path));
     Promise

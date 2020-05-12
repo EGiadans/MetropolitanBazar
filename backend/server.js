@@ -3,6 +3,7 @@ let mongoose = require('mongoose');
 let cors = require('cors');
 let bodyParser = require('body-parser');
 let dbConfig = require('./database/db');
+let formData = require('express-form-data');
 
 // Express Route
 const userRoute = require('../backend/routes/user.routes');
@@ -26,6 +27,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(cors());
+app.use(formData.parse());
 app.use('/user', userRoute);
 app.use('/products', productRoute);
 

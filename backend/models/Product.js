@@ -17,7 +17,7 @@ let productSchema = new Schema({
     date : {
         type: Date
     },
-    file1 : {
+    url1 : {
         type: String
     }
 }, {

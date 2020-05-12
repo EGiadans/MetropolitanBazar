@@ -16,7 +16,8 @@ class Sales extends React.Component {
             price: '',
             date: '',
             sales: [],
-            file1: ''
+            file1: '',
+            url1: ''
         };
     }
 
@@ -42,41 +43,34 @@ class Sales extends React.Component {
     onSubmit = (e) => {
         e.preventDefault();
         const {name, description, category, price, file1} = this.state;
-        const formData = new FormData();
-        formData.append('image',file1);
-
-        axios.post('http://localhost:4000/products/image-upload',
-            formData,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
-            .then((res) => {
-                //res => res.json()
-                console.log(res);
-            });
-
         const date = moment().format();
-        const product = {
-            name,
-            description,
-            category,
-            price,
-            date
-        };
-        /*
-        axios.post('http://localhost:4000/products/create-product', product)
-            .then( () => {
-                this.props.history.push("/feed");
+        const formData = new FormData();
+        formData.append('image', file1);
+        axios.post('http://localhost:4000/products/image-upload', formData,
+            {headers: { 'Content-Type': 'multipart/form-data' }}
+            ).then((res) => {
+                //console.log(res.data[0].url);
+                this.setState({ url1: res.data[0].url});
+                const { url1 } = this.state;
+                const product = {
+                    name,
+                    description,
+                    category,
+                    price,
+                    date,
+                    url1
+                };
+                axios.post('http://localhost:4000/products/create-product', product)
+                    .then(() => {
+                        this.setState({ name: '', description: '', category: '', price: '' });
+                        this.props.history.push("/feed");
+                    });
             });
-        this.setState({ name: '', description: '', category: '', price: '' });
-         */
+
     };
 
     handleChange = (e) => {
         this.setState({file1: e.target.files[0]});
-        // do your other "pre-submitted" logic here
     };
 
     render() {
@@ -86,10 +80,13 @@ class Sales extends React.Component {
                 <Navbar></Navbar>
                 <div className="container">
                     <div className="row">
-                        <div className="mt-5 py-3">
-                            <h1>Realizar una nueva venta</h1>
-                        </div>
-                        <div className="col-sm-12">
+                        <div className="col-sm-6">
+                            <div className="mt-5 py-3">
+                                <h1>Realizar una nueva venta</h1>
+                                <p className="pr-5 text-justify">Introduce los detalles del producto que deseas poner a la venta
+                                y haz click en el botón <b>¡Poner a la venta!</b> cuando estés seguro que la
+                                información es correcta. </p>
+                            </div>
                             <div className="form-wrapper" style={{width: '70%'}}>
                                 <Form onSubmit={this.onSubmit}>
                                     <Form.Group controlId="Name">
@@ -123,36 +120,39 @@ class Sales extends React.Component {
                                 </Form>
                             </div>
                         </div>
-                    </div>
-                    <div className="row">
-                        <div className="table-wrapper">
-                            <Table striped bordered hover>
-                                <thead>
-                                <tr>
-                                    <th>Nombre</th>
-                                    <th>Descripción</th>
-                                    <th>Fecha</th>
-                                    <th>Cantidad</th>
-
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {
-                                    sales.map((sale) => {
-                                        return (
-                                            <tr>
-                                                <td>{sale.name}</td>
-                                                <td>{sale.description}</td>
-                                                <td>{sale.date}</td>
-                                                <td>${sale.price}</td>
-                                            </tr>
-                                        );
-                                    })
-                                }
-
-
-                                </tbody>
-                            </Table>
+                        <div className="col-sm-6">
+                            <h2 className="text-center mt-5 py-3">Mis productos en venta</h2>
+                            <div className="table-wrapper">
+                                <Table striped bordered hover>
+                                    <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Imagen</th>
+                                        <th>Fecha de la publicación</th>
+                                        <th>Cantidad</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {sales.map((sale) => {
+                                            return (
+                                                <tr>
+                                                    <td>{sale.name}</td>
+                                                    <td>
+                                                        <img
+                                                            src={sale.url1}
+                                                            style={{
+                                                                maxWidth: '100%'
+                                                            }}/>
+                                                    </td>
+                                                    <td>{sale.date}</td>
+                                                    <td>${sale.price}</td>
+                                                </tr>
+                                            );
+                                        })
+                                    }
+                                    </tbody>
+                                </Table>
+                            </div>
                         </div>
                     </div>
                 </div>
