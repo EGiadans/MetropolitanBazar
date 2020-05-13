@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+let wishesSchema = new Schema({name: String})
 let userSchema = new Schema({
     name: {
         type: String,
@@ -18,16 +19,18 @@ let userSchema = new Schema({
         trim:true
     },
     email: {
-        type: String
+        type: String,
+        required: true,
     },
     hashpassword: {
         type: String,
         required: true,
         trim:true
     },
-    acta: {
-    }
+    acta: String,
 
+    wishes: [wishesSchema]
+    
 }, {
     collection: 'users'
 })

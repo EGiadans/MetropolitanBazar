@@ -5,28 +5,54 @@ import MyInfo from "./MyInfo";
 import axios from 'axios';
 import MyDocs from "./MyDocs";
 import Button from "react-bootstrap/Button";
+import Wishlist from "./Wishlist";
 
 
 class Profile extends React.Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
                 name: '',
                 lastname: '',
                 email: '',
                 password: '',
-                acta: null
+                acta: null,
+                nwish: '',
+                wishes: {
+                    name: ''
+                },
         };
         this.onActaSubmit = this.onActaSubmit.bind(this);
         this.onActaChange = this.onActaChange.bind(this);
+        this.onWishSubmit = this.onActaSubmit.bind(this);
+        this.onWishChange = this.onActaChange.bind(this);
+         
     }
 
     onActaChange(e){
         this.setState({
             acta: e.target.files
         })
-        console.log(e.target.files[0])
+    }
+
+    onWishChange(e){
+        this.setState({
+            nwish: e.target.value
+        })
+    }
+
+    onWishSubmit(e){
+        const user = {
+            wish: this.state.nwish,
+            user: this.state.email
+        }
+        axios.post("http://localhost:4000/user/make-wish",user)
+        .then((response) => {
+            console.log('user made a new wish')
+        }).catch((error) => {
+            console.log(error)
+        });
     }
 
     onActaSubmit(e){
@@ -34,12 +60,13 @@ class Profile extends React.Component {
         console.log('intento de subida')
         var formData = new FormData();
         formData.append('acta',this.state.acta);
+        console.log(this.state.acta)
         const config = {
             headers: {
                 'content-type': 'multipart/form-data'
             }
         };
-        axios.post("http://localhost:4000/user/acta",formData)
+        axios.post("http://localhost:4000/user/acta",formData, config)
             .then((response) => {
                 alert("The file was successfully uploaded");
             }).catch((error) => {
@@ -58,8 +85,10 @@ class Profile extends React.Component {
                     name: response.data[0].name,
                     lastname: response.data[0].lastname,
                     email: response.data[0].email,
-                    password: response.data[0].hashpassword
+                    password: response.data[0].hashpassword,
+                    wishes: response.data[0].wishes
                 });
+                console.log(response.data[0].wishes)
             })
             .catch(function (error){
                 console.log(error);
@@ -86,7 +115,7 @@ class Profile extends React.Component {
                                     <h5 className="my-5">Tranquilo, nadie más los podrá ver además de ti.</h5>
                                     <form onSubmit ={this.onActaSubmit}>
                                         <div className="row my-5 mx-5">
-                                            <h5>&nbsp;Acta de nacimiento </h5>&nbsp;<input name={'myActa'} onChange={this.onActaChange} type="file"/> <Button type = 'submit'>Enviar</Button>
+                                            <h5>&nbsp;Acta de nacimiento </h5>&nbsp;<input name='myActa' onChange={this.onActaChange} type="file"/> <Button type = 'submit'>Enviar</Button>
                                         </div>
                                     </form>
                                     <div className="row my-5 mx-5">
@@ -100,7 +129,7 @@ class Profile extends React.Component {
                             <h1>Payments</h1>
                         </Tab>
                         <Tab eventKey="wish" title="Mi Wishlist">
-                            <h1>Wishlist</h1>
+                            <Wishlist wishes={this.state.wishes} onWishSubmit={this.onWishSubmit.bind(this)} onWishChange = {this.onWishChange.bind(this)}/>
                         </Tab>
                     </Tabs>
                 </div>

@@ -3,42 +3,41 @@ express = require('express');
 bodyParser = require('body-parser');
 router = express.Router();
 const multer = require("multer");
+const uuid = require("uuid");
 path = require('path');
-app = express()
-app.use(bodyParser.urlencoded({extended: true}))
+
+// User Model
+let userSchema = require('../models/User');
+
 //file upload
 
 const storage = multer.diskStorage({
-  destination: function(req, file, cb){
-    cb(null, 'public');
+  destination: (req, file, cb) => {
+    console.log('destination creaated?')
+    cb(null, 'public/actas');
   },
-  filename: function(req, file, cb){
-    cb(null, "FILE-" + Date.now() + path.extname(file.originalname));
+  filename: (req, file, cb) => {
+    console.log('filename stored')
+    cb(null, uuid.v4().toString() + "_" + file.originalname);
   }
 });
 
-upload = multer({storage}).single('acta');
+const upload = multer({storage: storage}).single('myActa');
 
 const obj = (req,res) => {
-  upload(req, res, () => {
-     console.log("Request ---", req.body);
-     console.log("Request file ---", req.file); //Here you get file.
-     var query = {'email': req.body.user}
-     userSchema.findOneAndUpdate({'email': 'riveratwister2@gmail.com'},{acta: req.body.acta}, (error, data) => {
-      if (error) {
-        return next(error)
-      } else {
-        console.log(data)
-        res.json(data)
-      }
-     })
+  console.log(req.headers)
+  upload(req, res, (err) => {
+     if (err){
+       console.log(err)
+       return
+     } else {
+       console.log('file uploaded')
+     }
   });
 }
 
 router.post("/acta", obj);
 
-// User Model
-let userSchema = require('../models/User');
 
 // CREATE User
 router.route('/create-user').post((req, res) => {
@@ -52,7 +51,18 @@ router.route('/create-user').post((req, res) => {
   })
 });
 
-//LOGIN user
+// CREATE User wish
+router.route('/make-wish').post((req, res) => {
+  userSchema.wishSchema.push(req.body, (error, data) => {
+    if (error) {
+      return next(error)
+    } else {
+      console.log(data)
+      res.json(data)
+    }
+  })
+});
+
 router.route('/login-user').post((req, res) => {
   userSchema.find({email: req.body.email, hashpassword: req.body.password}, (error, data) => {
     if (data.length) {
@@ -69,6 +79,16 @@ router.route('/profile').get((req, res) => {
       return next(error)
     } else {
       res.json(data)
+    }
+  })
+})
+
+router.route('/wishlist').get((req, res) => {
+  userSchema.find({email: req.query.email}, (error, data) => {
+    if (error) {
+      return next(error)
+    } else {
+      res.json(data.wishes)
     }
   })
 })
