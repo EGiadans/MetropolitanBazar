@@ -19,6 +19,12 @@ let productSchema = new Schema({
     },
     url1 : {
         type: String
+    },
+    url2 : {
+        type: String
+    },
+    url3 : {
+        type: String
     }
 }, {
     collection: 'products'

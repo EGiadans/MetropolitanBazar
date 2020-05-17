@@ -17,7 +17,7 @@ class Sales extends React.Component {
             date: '',
             sales: [],
             file1: '',
-            url1: ''
+            array: []
         };
     }
 
@@ -42,35 +42,38 @@ class Sales extends React.Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-        const {name, description, category, price, file1} = this.state;
+        const {name, description, category, price, array} = this.state;
         const date = moment().format();
         const formData = new FormData();
-        formData.append('image', file1);
+        array.forEach((file, i) => {
+            formData.append(i, file);
+        });
         axios.post('http://localhost:4000/products/image-upload', formData,
             {headers: { 'Content-Type': 'multipart/form-data' }}
-            ).then((res) => {
-                //console.log(res.data[0].url);
-                this.setState({ url1: res.data[0].url});
-                const { url1 } = this.state;
-                const product = {
-                    name,
-                    description,
-                    category,
-                    price,
-                    date,
-                    url1
-                };
-                axios.post('http://localhost:4000/products/create-product', product)
-                    .then(() => {
-                        this.setState({ name: '', description: '', category: '', price: '' });
-                        this.props.history.push("/feed");
-                    });
-            });
-
+        ).then((res) => {
+            const product = {
+                name,
+                description,
+                category,
+                price,
+                date,
+                url1: res.data[0].url,
+                url2: res.data[1].url,
+                url3: res.data[2].url
+            };
+            axios.post('http://localhost:4000/products/create-product', product)
+                .then(() => {
+                    this.setState({ name: '', description: '', category: '', price: '' });
+                    this.props.history.push("/feed");
+                });
+        });
     };
 
     handleChange = (e) => {
-        this.setState({file1: e.target.files[0]});
+        const { array } = this.state;
+        const newImage = e.target.files[0];
+        array.push(newImage);
+        this.setState(array);
     };
 
     render() {
@@ -109,9 +112,19 @@ class Sales extends React.Component {
                                         <Form.Control name="price" type="text" value={price} onChange={this.onInputChange} />
                                     </Form.Group>
 
-                                    <Form.Group controlId="Price">
+                                    <Form.Group controlId="Image 1">
                                         <Form.Label>Imagen 1</Form.Label>
-                                        <Form.Control name="file1" type="file" onChange={this.handleChange.bind(this)} />
+                                        <Form.Control name="file1" type="file" onChange={this.handleChange.bind(this)} required/>
+                                    </Form.Group>
+
+                                    <Form.Group controlId="Image 2">
+                                        <Form.Label>Imagen 2</Form.Label>
+                                        <Form.Control name="file2" type="file" onChange={this.handleChange.bind(this)} required/>
+                                    </Form.Group>
+
+                                    <Form.Group controlId="Image 3">
+                                        <Form.Label>Imagen 3</Form.Label>
+                                        <Form.Control name="file3" type="file" onChange={this.handleChange.bind(this)} required/>
                                     </Form.Group>
 
                                     <Button variant="success" size="lg" type="submit">
