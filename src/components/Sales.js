@@ -13,6 +13,7 @@ class Sales extends React.Component {
             name: '',
             description: '',
             category: '',
+            categories: ['Test1', 'Test2', 'Test3'],
             price: '',
             date: '',
             sales: [],
@@ -103,8 +104,9 @@ class Sales extends React.Component {
                                     </Form.Group>
 
                                     <Form.Group controlId="Category">
-                                        <Form.Label>Categoría</Form.Label>
-                                        <Form.Control name="category" type="text" value={category} onChange={this.onInputChange} />
+                                        <Form.Control as="select" value={this.state.category} onChange={(e) => this.setState({category: e.target.value})}>
+                                            {this.state.categories.map((category) => <option key={category.value} value={category.value}>{category.display}</option>)} 
+                                        </Form.Control>
                                     </Form.Group>
 
                                     <Form.Group controlId="Price">
