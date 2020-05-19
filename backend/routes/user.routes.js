@@ -12,20 +12,20 @@ let userSchema = require('../models/User');
 //file upload
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
+  destination: (req, file, callback) => {
     console.log('destination creaated?')
-    cb(null, 'public/actas');
+    callback(null, 'public/actas');
   },
-  filename: (req, file, cb) => {
+  filename: (req, file, callback) => {
     console.log('filename stored')
-    cb(null, uuid.v4().toString() + "_" + file.originalname);
+    callback(null, uuid.v4().toString() + "_" + file.originalname);
   }
 });
 
 const upload = multer({storage: storage}).single('myActa');
 
 const obj = (req,res) => {
-  console.log(req.headers)
+  console.log(req.files)
   upload(req, res, (err) => {
      if (err){
        console.log(err)

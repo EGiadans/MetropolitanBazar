@@ -20,8 +20,9 @@ class Profile extends React.Component {
                 acta: null,
                 nwish: '',
                 wishes: {
-                    name: ''
+                    name: 'prueba'
                 },
+                wishesLoaded: false
         };
         this.onActaSubmit = this.onActaSubmit.bind(this);
         this.onActaChange = this.onActaChange.bind(this);
@@ -60,13 +61,10 @@ class Profile extends React.Component {
         console.log('intento de subida')
         var formData = new FormData();
         formData.append('acta',this.state.acta);
+        formData.append('user', this.state.email);
         console.log(this.state.acta)
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
-            }
-        };
-        axios.post("http://localhost:4000/user/acta",formData, config)
+        console.log(formData)
+        axios.post("http://localhost:4000/user/acta",formData)
             .then((response) => {
                 alert("The file was successfully uploaded");
             }).catch((error) => {
@@ -86,9 +84,9 @@ class Profile extends React.Component {
                     lastname: response.data[0].lastname,
                     email: response.data[0].email,
                     password: response.data[0].hashpassword,
-                    wishes: response.data[0].wishes
+                    wishes: response.data[0].wishes,
+                    wishesLoaded: true
                 });
-                console.log(response.data[0].wishes)
             })
             .catch(function (error){
                 console.log(error);
@@ -129,7 +127,7 @@ class Profile extends React.Component {
                             <h1>Payments</h1>
                         </Tab>
                         <Tab eventKey="wish" title="Mi Wishlist">
-                            <Wishlist wishes={this.state.wishes} onWishSubmit={this.onWishSubmit.bind(this)} onWishChange = {this.onWishChange.bind(this)}/>
+                            {this.state.wishesLoaded && <Wishlist wishes={this.state.wishes}/>}
                         </Tab>
                     </Tabs>
                 </div>
