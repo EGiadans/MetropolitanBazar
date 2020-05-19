@@ -56,6 +56,7 @@ class Sales extends React.Component {
                                         <Form.Control name="name" type="text" value={name} onChange={this.onInputChange} />
                                     </Form.Group>
 
+                                    
                                     <Form.Group controlId="Description">
                                         <Form.Label>Descripción</Form.Label>
                                         <Form.Control name="description" type="text" value={description} onChange={this.onInputChange} />
