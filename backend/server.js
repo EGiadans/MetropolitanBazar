@@ -3,10 +3,11 @@ let mongoose = require('mongoose');
 let cors = require('cors');
 let bodyParser = require('body-parser');
 let dbConfig = require('./database/db');
+let formData = require('express-form-data');
 
 // Express Route
-const userRoute = require('../backend/routes/user.route');
-const productRoute = require('../backend/routes/product.route');
+const userRoute = require('../backend/routes/user.routes');
+const productRoute = require('./routes/product.routes');
 
 // Connecting mongoDB Database
 mongoose.Promise = global.Promise;
@@ -26,7 +27,8 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(cors());
-app.use('/users', userRoute);
+app.use(formData.parse());
+app.use('/user', userRoute);
 app.use('/products', productRoute);
 
 
@@ -38,11 +40,11 @@ const server = app.listen(port, () => {
 
 // 404 Error
 app.use((req, res, next) => {
-    next(createError(404));
+  next(createError(404));
 });
 
 app.use(function (err, req, res, next) {
-    console.error(err.message);
-    if (!err.statusCode) err.statusCode = 500;
-    res.status(err.statusCode).send(err.message);
+  console.error(err.message);
+  if (!err.statusCode) err.statusCode = 500;
+  res.status(err.statusCode).send(err.message);
 });

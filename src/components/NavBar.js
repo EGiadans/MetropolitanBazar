@@ -1,7 +1,7 @@
 import React from "react";
 import { Navbar, Nav, FormControl, Button, Form } from "react-bootstrap";
 
-const NavBar = ({searchVisible}) => (
+const NavBar = ({searchVisible, onChangeMethod, onClickMethod}) => (
     <Navbar expand="lg" style={{backgroundColor: '#80ffcc'}}>
         <div className="container">
             <Navbar.Brand href="/feed">Metropolitan Bazar</Navbar.Brand>
@@ -14,8 +14,8 @@ const NavBar = ({searchVisible}) => (
                         <Nav.Link href="/sales">Ventas</Nav.Link>
                     </Nav>
                     <Form inline hidden={searchVisible}>
-                        <FormControl type="text" placeholder="Buscar un producto..." className="mr-sm-2" />
-                        <Button variant="outline-primary">Buscar</Button>
+                        <FormControl type="text" placeholder="Buscar un producto..." className="mr-sm-2" onChange={onChangeMethod}/>
+                        <Button variant="outline-primary" onClick={onClickMethod}>Buscar</Button>
                     </Form>
                 </Navbar.Collapse>
             </div>
