@@ -10,7 +10,8 @@ class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            products: []
+            products: [],
+            search: ''
         };
     }
 
@@ -40,12 +41,29 @@ class Profile extends React.Component {
         NotificationManager.success('Listo', 'Agregado a tu wishlist');
     };
 
+    onSearchChange = (e) => {
+        this.setState({ search: e.target.value })
+    };
+    
+    //se murio mi amigo bronco
+
+    onSearchButton = () => {
+        const { search } = this.state;
+        axios.get('http://localhost:4000/products/search/' + search)
+        .then(res => {
+            this.setState({products: res.data});
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
+
     render() {
         const { products } = this.state;
         return (
             <>
                 <NotificationContainer/>
-                <Navbar></Navbar>
+                <Navbar searchVisible={false} onChangeMethod={this.onSearchChange} onClickMethod={this.onSearchButton}></Navbar>
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-2 bg-light text-center" style={{borderBlock: '10', height: '100vh'}}>

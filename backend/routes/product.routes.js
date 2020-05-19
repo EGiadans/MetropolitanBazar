@@ -90,4 +90,14 @@ router.route('/get-product/:id').get((req, res) => {
     })
 });
 
+router.route('/search/:search').get((req, res) => {
+    productSchema.find({ name: {$regex: '.*' + req.params.search + '.*'} }, (error, data) => {
+        if (error) {
+            return error;
+        } else {
+            res.json(data)
+        }
+    })
+});
+
 module.exports = router;
