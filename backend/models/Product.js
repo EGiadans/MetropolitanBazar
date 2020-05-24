@@ -13,6 +13,18 @@ let productSchema = new Schema({
     },
     price : {
         type: Number
+    },
+    date : {
+        type: Date
+    },
+    url1 : {
+        type: String
+    },
+    url2 : {
+        type: String
+    },
+    url3 : {
+        type: String
     }
 }, {
     collection: 'products'
