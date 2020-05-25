@@ -8,6 +8,7 @@ let formData = require('express-form-data');
 // Express Route
 const userRoute = require('../backend/routes/user.routes');
 const productRoute = require('./routes/product.routes');
+const adRoutes = require('../backend/routes/ad.routes');
 
 // Connecting mongoDB Database
 mongoose.Promise = global.Promise;
@@ -29,6 +30,7 @@ app.use(bodyParser.urlencoded({
 app.use(cors());
 app.use(formData.parse());
 app.use('/user', userRoute);
+app.use('/ads', adRoutes);
 app.use('/products', productRoute);
 
 
