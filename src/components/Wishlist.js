@@ -1,4 +1,6 @@
 import React from "react";
+import Button from "react-bootstrap/Button";
+
 
 const Wishlist = (props) => (
     <div className="container bg-light">
@@ -6,7 +8,12 @@ const Wishlist = (props) => (
             <h1>Estos son tus deseos</h1>
             <div>
                 <ul>
-                    {props.wishes.map((wish) => (<li>{wish.name}</li>))}
+                    {props.wishes.map((wish) => (
+                    <li>{wish.name}&nbsp;
+                    <Button onClick={() => props.goToWish(wish.refId)}>Ver Deseo</Button>
+                    </li>
+                    
+                    ))}
                 </ul>
             </div>
         </div>

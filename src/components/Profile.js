@@ -43,6 +43,15 @@ class Profile extends React.Component {
         })
     }
 
+    goToWish = (productId) => {
+        this.props.history.push({
+            pathname: `/product/${productId}`,
+            state: {
+                from: '/feed'
+            }
+        })
+    };
+
     onWishSubmit(e){
         const user = {
             wish: this.state.nwish,
@@ -127,7 +136,7 @@ class Profile extends React.Component {
                             <h1>Payments</h1>
                         </Tab>
                         <Tab eventKey="wish" title="Mi Wishlist">
-                            {this.state.wishesLoaded && <Wishlist wishes={this.state.wishes}/>}
+                            {this.state.wishesLoaded && <Wishlist wishes={this.state.wishes} goToWish={this.goToWish}/>}
                         </Tab>
                     </Tabs>
                 </div>

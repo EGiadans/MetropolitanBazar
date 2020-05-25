@@ -53,12 +53,19 @@ router.route('/create-user').post((req, res) => {
 
 // CREATE User wish
 router.route('/make-wish').post((req, res) => {
-  userSchema.wishSchema.push(req.body, (error, data) => {
+  let wish = {
+    "name": req.body.name, 
+    "refId": req.body.id
+  }
+  userSchema.findOneAndUpdate({email: 'riveratwister2@gmail.com'}, {
+    $push: {wishes: wish}}, (error, data) => {
     if (error) {
-      return next(error)
+      console.log(error)
+      console.log('algo paso')
     } else {
-      console.log(data)
-      res.json(data)
+      res.sendStatus(200)
+      console.log(wish)
+      console.log('wish made')
     }
   })
 });
