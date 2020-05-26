@@ -4,6 +4,7 @@ import {Tab, Tabs } from "react-bootstrap";
 import MyInfo from "./MyInfo";
 import axios from 'axios';
 import MyDocs from "./MyDocs";
+import MyAds from "./MyAds";
 
 class Profile extends React.Component {
     constructor(props) {
@@ -46,7 +47,7 @@ class Profile extends React.Component {
             <Navbar></Navbar>
             <div className="container">
                 <div className="my-5 py-3">
-                    <Tabs style={{fontSize: 20}}>
+                    <Tabs style={{fontSize: 20}} activeKey="ads">
                         <Tab eventKey="info" title="Mi Información">
                             <MyInfo name={this.state.name} lastname={this.state.lastname} email={this.state.email} password={this.state.password}/>
                         </Tab>
@@ -58,6 +59,9 @@ class Profile extends React.Component {
                         </Tab>
                         <Tab eventKey="wish" title="Mi Wishlist">
                             <h1>Wishlist</h1>
+                        </Tab>
+                        <Tab eventKey="ads" title="Mis Anuncios">
+                            <MyAds/>
                         </Tab>
                     </Tabs>
                 </div>

@@ -25,14 +25,23 @@ router.route('/').get((req, res) => {
     })
 });
 
-router.route('/get-ad').get((req, res) => {
-    adSchema.find({email: req.query.email}, (error, data) => {
+router.route('/get-ad/:id').get((req, res) => {
+    adSchema.find({_id: req.params.ad}, (error, data) => {
         if (error) {
             return next(error);
         } else {
             res.json(data);
         }
     })
+});
+
+router.route('/random-ad/:random').get((req, res) => {
+    console.log(req.params.random);
+    adSchema.findOne().skip(req.params.random,
+         (err, result) => {
+            // Tada! random user
+            console.log(result)
+        });
 });
 
 module.exports = router;

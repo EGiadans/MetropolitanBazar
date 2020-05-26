@@ -11,7 +11,8 @@ class Profile extends React.Component {
         super(props);
         this.state = {
             products: [],
-            search: ''
+            search: '',
+            ad: {}
         };
     }
 
@@ -34,18 +35,25 @@ class Profile extends React.Component {
             .catch((error) => {
                 console.log(error);
             });
-    }
+        axios.get('http://localhost:4000/ads/')
+            .then(res => {
+                /*
+                this.setState({ ads: res.data });
+                const { ads } = this.state;
+                 */
+                const random = Math.random() * (+res.data.length - +0) + +0;
+                const randomAd = res.data[Math.floor(random)];
+                this.setState({ad: randomAd});
+            });
+    };
 
     showWishList = () => {
-      //NotificationManager.warning('Listo', 'Agregado a tu wishlist', 10000);
         NotificationManager.success('Listo', 'Agregado a tu wishlist');
     };
 
     onSearchChange = (e) => {
         this.setState({ search: e.target.value })
     };
-    
-    //se murio mi amigo bronco
 
     onSearchButton = () => {
         const { search } = this.state;
@@ -56,10 +64,10 @@ class Profile extends React.Component {
         .catch(error => {
             console.log(error);
         });
-    }
+    };
 
     render() {
-        const { products } = this.state;
+        const { products, ad } = this.state;
         return (
             <>
                 <NotificationContainer/>
@@ -71,10 +79,9 @@ class Profile extends React.Component {
                             <img alt="img1" style={{ maxWidth: '100%'}}
                                  src="https://cdn.pocket-lint.com/r/s/970x/assets/images/148296-games-review-xbox-one-s-all-digital-edition-product-shots-image1-xct4hs5njv-jpg.webp">
                             </img>
-                            <h4>Xbox one usado</h4>
-                            <p>500gb</p>
-                            <p>Un control incluido</p>
-                            <p style={{fontWeight: 'bold'}}>$4000</p>
+                            <h4>{ad.title}</h4>
+                            <p>{ad.description}</p>
+                            <p style={{fontWeight: 'bold'}}>${ad.price}</p>
                         </div>
                         <div className="col-sm-9 ml-5">
                             <h1 className="my-5">¡Bienvenido al Bazar!</h1>
