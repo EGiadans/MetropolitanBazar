@@ -80,7 +80,16 @@ class Signup extends React.Component {
         console.log(user);
         
         axios.post('http://localhost:4000/user/create-user', user)
-        .then(res => console.log(res.data));
+        .then(res => {
+            this.props.history.push({
+                pathname: '/profile',
+                state: { email: this.state.email,
+                    }
+                })
+            })
+        .catch(() => {
+            alert('El email o password son incorrectos')
+        });
     }
     }
 

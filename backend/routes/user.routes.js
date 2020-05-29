@@ -1,9 +1,43 @@
-let mongoose = require('mongoose'),
-express = require('express'),
-router = express.Router();
+const mongoose = require('mongoose');
+const express = require('express');
+const bodyParser = require('body-parser');
+const router = express.Router();
+const multer = require("multer");
+const uuid = require("uuid");
+const path = require('path');
 
 // User Model
 let userSchema = require('../models/User');
+
+//file upload
+
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    console.log('destination creaated?')
+    callback(null, 'public/actas');
+  },
+  filename: (req, file, callback) => {
+    console.log('filename stored')
+    callback(null, uuid.v4().toString() + "_" + file.originalname);
+  }
+});
+
+const upload = multer({storage: storage}).single('myActa');
+
+const obj = (req,res) => {
+  console.log(req.files)
+  upload(req, res, (err) => {
+     if (err){
+       console.log(err)
+       return
+     } else {
+       console.log('file uploaded')
+     }
+  });
+}
+
+router.post("/acta", obj);
+
 
 // CREATE User
 router.route('/create-user').post((req, res) => {
@@ -17,7 +51,25 @@ router.route('/create-user').post((req, res) => {
   })
 });
 
-//LOGIN user
+// CREATE User wish
+router.route('/make-wish').post((req, res) => {
+  let wish = {
+    "name": req.body.name,
+    "refId": req.body.id
+  }
+  userSchema.findOneAndUpdate({email: 'riveratwister2@gmail.com'}, {
+    $push: {wishes: wish}}, (error, data) => {
+    if (error) {
+      console.log(error)
+      console.log('algo paso')
+    } else {
+      res.sendStatus(200)
+      console.log(wish)
+      console.log('wish made')
+    }
+  })
+});
+
 router.route('/login-user').post((req, res) => {
   userSchema.find({email: req.body.email, hashpassword: req.body.password}, (error, data) => {
     if (data.length) {
@@ -34,6 +86,16 @@ router.route('/profile').get((req, res) => {
       return next(error)
     } else {
       res.json(data)
+    }
+  })
+})
+
+router.route('/wishlist').get((req, res) => {
+  userSchema.find({email: req.query.email}, (error, data) => {
+    if (error) {
+      return next(error)
+    } else {
+      res.json(data.wishes)
     }
   })
 })

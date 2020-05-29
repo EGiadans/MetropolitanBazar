@@ -40,10 +40,19 @@ const server = app.listen(port, () => {
     console.log('Connected to port ' + port)
 });
 
+app.post('/profile/acta', function (req, res) {
+    // 10 minutes timeout just for POST to myroute
+        req.socket.setTimeout(10 * 60 * 1000);
+        upload.single('myActa');
+        console.log(req.file);
+    });
+
 // 404 Error
 app.use((req, res, next) => {
   next(createError(404));
 });
+
+
 
 app.use(function (err, req, res, next) {
   console.error(err.message);

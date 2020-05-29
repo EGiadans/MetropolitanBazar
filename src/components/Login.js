@@ -37,8 +37,6 @@ class Login extends React.Component {
             password: this.state.password,
         }
 
-        console.log(user);
-
         axios.post('http://localhost:4000/user/login-user', user)
         .then( res => {
             this.props.history.push({
@@ -51,6 +49,7 @@ class Login extends React.Component {
             alert('El email o password son incorrectos')
         });
     }
+    
     render () {
         return(
             <>
