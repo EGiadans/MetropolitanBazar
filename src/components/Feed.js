@@ -11,7 +11,8 @@ class Profile extends React.Component {
         super(props);
         this.state = {
             products: [],
-            search: ''
+            search: '',
+            email: ''
         };
     }
 
@@ -36,11 +37,13 @@ class Profile extends React.Component {
             });
     }
 
-    showWishList = (productId,productName) => {
+    showWishList = (productId,productName, productUrl) => {
         const wish = {
             id: productId,
-            name: productName
+            name: productName,
+            imgn: 'productUrl'
         }
+        console.log(wish)
         axios.post('http://localhost:4000/user/make-wish',wish)
             .then(res => {
                 NotificationManager.success('Listo', 'Agregado a tu wishlist');
@@ -113,7 +116,7 @@ class Profile extends React.Component {
                                                     </td>
                                                     <td>
                                                         <Button onClick={() => this.redirectTo(product._id)}>Ver este producto</Button>
-                                                        <Button onClick={() => this.showWishList(product._id, product.name)} className="btn-warning mt-2"><i className="fas fa-star"/>&nbsp;Agregar a Wishlist</Button>
+                                                        <Button onClick={() => this.showWishList(product._id, product.name, product.url1)} className="btn-warning mt-2"><i className="fas fa-star"/>&nbsp;Agregar a Wishlist</Button>
                                                     </td>
                                                 </tr>
                                             );

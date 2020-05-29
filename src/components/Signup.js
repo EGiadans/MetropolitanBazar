@@ -101,7 +101,7 @@ class Signup extends React.Component {
                     backgroundPosition: 'center',
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
-                    backgroundImage: 'url(https://www.visitmexico.com/viajemospormexico/assets/uploads/destinos/tamaulipas_destinos-principales_tampico_04.jpg)'
+                    backgroundImage: 'url(https://www.visitmexico.com/wp-content/uploads/2020/02/tamaulipas_destinos-principales_tampico_04.jpg)'
                 }}>
                 <div className="">
                     <div className="row">

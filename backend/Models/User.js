@@ -30,7 +30,8 @@ let userSchema = new Schema({
 
     wishes: [{
         name: String,
-        refId: String
+        refId: String,
+        imgn: String
     }]
     
 }, {
