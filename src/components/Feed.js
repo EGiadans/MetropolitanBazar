@@ -77,18 +77,22 @@ class Profile extends React.Component {
         });
     };
 
+    redirect = () => {
+        this.props.history.push('/login');
+    };
+
     render(){
         const { products, ad } = this.state;
         return (
             <>
                 <NotificationContainer/>
-                <Navbar searchVisible={false} onChangeMethod={this.onSearchChange} onClickMethod={this.onSearchButton}></Navbar>
+                <Navbar searchVisible={false} onChangeMethod={this.onSearchChange} onClickMethod={this.onSearchButton} redirect={this.redirect} />
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-2 bg-light text-center" style={{ borderBlock: '10', height: '100vh' }}>
                             <h2 className="my-5">Anuncios clasificados</h2>
                             <img alt="img1" style={{ maxWidth: '100%' }}
-                                src="https://cdn.pocket-lint.com/r/s/970x/assets/images/148296-games-review-xbox-one-s-all-digital-edition-product-shots-image1-xct4hs5njv-jpg.webp">
+                                src={ad.imageUrl}>
                             </img>
                             <h4>{ad.title}</h4>
                             <p>{ad.description}</p>

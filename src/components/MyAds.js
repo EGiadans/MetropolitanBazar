@@ -2,6 +2,7 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import moment from "moment";
 import axios from "axios";
+import UserProfile from "../UserSession";
 
 class MyAds extends React.Component {
     constructor(props) {
@@ -12,31 +13,49 @@ class MyAds extends React.Component {
             price: '',
             date: '',
             file1: '',
-            imgUrl: ''
+            imgUrl: '',
+            array: []
         };
     }
 
     onSubmit = (e) => {
         e.preventDefault();
-        const { title, description, price } = this.state;
+        const { title, description, price, array } = this.state;
         const date = moment().format();
-        const product = {
-            title,
-            description,
-            price,
-            date
-        };
-        axios.post('http://localhost:4000/ads/create-ad', product)
-            .then(() => {
-                this.setState({ name: '', description: '', category: '', price: '' });
-                this.props.history.push("/feed");
-            });
+        const formData = new FormData();
+        array.forEach((file, i) => {
+            formData.append(i, file);
+        });
+        axios.post('http://localhost:4000/products/image-upload', formData,
+            {headers: { 'Content-Type': 'multipart/form-data' }}
+        ).then((res) => {
+            const product = {
+                title,
+                description,
+                price,
+                date,
+                imageUrl: res.data[0].url,
+                owner: UserProfile.getName('email')
+            };
+            axios.post('http://localhost:4000/ads/create-ad', product)
+                .then(() => {
+                    this.setState({ name: '', description: '', category: '', price: '' });
+                    this.props.history.push("/feed");
+                });
+        })
     };
 
     onInputChange = (e) => {
         const { id, value } = e.target;
         const change = { [id]: value };
         this.setState(change);
+    };
+
+    handleChange = (e) => {
+        const { array } = this.state;
+        const newImage = e.target.files[0];
+        array.push(newImage);
+        this.setState(array);
     };
 
     render() {
@@ -52,7 +71,7 @@ class MyAds extends React.Component {
                                 <label><b> Nombre del producto: </b></label><input id="title" name="" type="text" placeholder="" onChange={this.onInputChange} /><br/>
                                 <label><b> Descripción: </b></label><input id="description" name="" type="text" placeholder="" onChange={this.onInputChange} /><br/>
                                 <label><b> Precio de venta: </b></label><input id="price" name="" type="text" placeholder="" onChange={this.onInputChange} /><br/>
-                                <label><b> Imagen del producto: </b></label><input id="image" name="" type="file" placeholder="" onChange={this.onInputChange} /><br/>
+                                <label><b> Imagen del producto: </b></label><input id="image" name="" type="file" placeholder="" onChange={this.handleChange.bind(this)}/><br/>
                                 <Button className="btn-primary" onClick={this.onSubmit}>Cambiar</Button>
                             </form>
                         </div>

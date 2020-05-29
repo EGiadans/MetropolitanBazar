@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import Modal from "react-bootstrap/Modal";
+import UserProfile from "../UserSession";
 
 class ProductDetails extends React.Component {
     constructor(props) {
@@ -67,8 +68,19 @@ class ProductDetails extends React.Component {
 
     handleBuy = () => {
         //Agregar visibility del producto como campo en bd, con esta accion se debe cambiar a FALSE
-        NotificationManager.success('Has comprado este producto. Revisa tu email para los detalles de tu pedido.','Éxito');
-        setTimeout(() => {  this.props.history.push('/feed'); }, 5000);
+        const { product } = this.state;
+        console.log(product);
+        axios.put('http://localhost:4000/products/update-product/' + product._id,
+            {
+                purchasedBy: UserProfile.getName('email')
+            }).then( () => {
+                NotificationManager.success('Has comprado este producto. Revisa tu email para los detalles de tu pedido.','Éxito');
+                setTimeout(() => {  this.props.history.push('/feed'); }, 5000);
+            }).catch( () => {
+                NotificationManager.error('Ha ocurrido un error al procesar tu pago, intenta más tarde.', 'Error');
+                this.setState({setShow: false, show: false});
+        });
+
     };
 
     render() {

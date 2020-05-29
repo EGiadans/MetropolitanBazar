@@ -7,6 +7,7 @@ import MyDocs from "./MyDocs";
 import MyAds from "./MyAds";
 import Button from "react-bootstrap/Button";
 import Wishlist from "./Wishlist";
+import UserSession from '../UserSession';
 
 
 class Profile extends React.Component {
@@ -82,7 +83,9 @@ class Profile extends React.Component {
     }
 
     componentDidMount() {
-        const hemail = this.props.location.state.email
+        //console.log(UserSession.getName('email'));
+        //const hemail = this.props.location.state.email
+        const hemail = UserSession.getName('email');
         axios.get('http://localhost:4000/user/profile', {
             params: {
                 email: hemail
@@ -102,11 +105,14 @@ class Profile extends React.Component {
                 console.log(error);
             })
     }
+    redirect = () => {
+        this.props.history.push('/login');
+    };
 
     render() {
         return (
             <>
-            <Navbar></Navbar>
+            <Navbar redirect={this.redirect}></Navbar>
             <div className="container">
                 <div className="my-5 py-3">
                     <Tabs style={{fontSize: 20}}>
@@ -138,7 +144,7 @@ class Profile extends React.Component {
                             */}
                         </Tab>
                         <Tab eventKey="ads" title="Mis Anuncios">
-                            <MyAds/>
+                            <MyAds history={this.props.history}/>
                         </Tab>
                         <Tab eventKey="wish" title="Mi Wishlist">
                             {this.state.wishesLoaded && <Wishlist wishes={this.state.wishes} goToWish={this.goToWish}/>}

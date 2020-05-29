@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
 import axios from 'axios';
+import UserSession from '../UserSession';
 
 class Login extends React.Component {
     constructor(props) {
@@ -17,26 +18,25 @@ class Login extends React.Component {
         }
     }
 
-    onChangeEmail= (e) =>{
+    onChangeEmail = (e) => {
         this.setState({
             email: e.target.value
         });
-    }
+    };
 
-    onChangePassword = (e) =>{
+    onChangePassword = (e) => {
         this.setState({
             password: e.target.value
         });
-    }
+    };
 
-    goToProfile = (e) =>{
-
+    goToProfile = (e) => {
         e.preventDefault();
         const user = {
             email: this.state.email,
             password: this.state.password,
-        }
-
+        };
+        UserSession.setName('email', this.state.email);
         axios.post('http://localhost:4000/user/login-user', user)
         .then( res => {
             this.props.history.push({
@@ -48,8 +48,8 @@ class Login extends React.Component {
         .catch(() => {
             alert('El email o password son incorrectos')
         });
-    }
-    
+    };
+
     render () {
         return(
             <>
@@ -59,7 +59,7 @@ class Login extends React.Component {
                     backgroundPosition: 'center',
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
-                    backgroundImage: 'url(https://www.visitmexico.com/viajemospormexico/assets/uploads/destinos/tamaulipas_destinos-principales_tampico_04.jpg)'
+                    backgroundImage: 'url(https://res.cloudinary.com/dvg0v2vjr/image/upload/v1590736842/tampico_ejqx30.jpg)'
                 }}>
                 <NavBar searchVisible={true}/>
                 <div className="container">

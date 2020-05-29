@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "./NavBar";
 import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
+import UserProfile from "../UserSession";
 import axios from "axios";
 
 class Sales extends React.Component {
@@ -13,7 +13,7 @@ class Sales extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:4000/products/')
+        axios.get('http://localhost:4000/products/my-purchases/'+UserProfile.getName('email'))
             .then(res => {
                 this.setState({
                     sales: res.data
@@ -24,19 +24,23 @@ class Sales extends React.Component {
             });
     };
 
+    redirect = () => {
+        this.props.history.push('/login');
+    };
+
     render() {
         const { sales } = this.state;
         return (
             <>
-                <Navbar></Navbar>
+                <Navbar redirect={this.redirect}/>
                 <div className="container">
                     <div className="my-5 py-3">
-                        <h1>Purchases</h1>
+                        <h1>Mis Compras</h1>
                         <div className="table-wrapper">
                             <Table striped bordered hover>
                                 <thead>
                                 <tr>
-                                    <th>Nombre</th>
+                                    <th>Nombre del producto</th>
                                     <th>Imagen</th>
                                     <th>Fecha de la publicación</th>
                                     <th>Cantidad</th>

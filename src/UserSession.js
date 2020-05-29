@@ -1,20 +1,15 @@
-let UserProfile = (function() {
-    let full_name = "";
-
-    let getName = function() {
-        return full_name;    // Or pull this from cookie/localStorage
+class UserProfile {
+    static getName = (key) => {
+        return localStorage.getItem(key);
     };
 
-    let setName = function(name) {
-        full_name = name;
-        // Also set this in cookie/localStorage
+    static setName = (key,name) => {
+        localStorage.setItem(key, name);
     };
 
-    return {
-        getName: getName,
-        setName: setName
-    }
-
-})();
+    static logOut = () => {
+        localStorage.clear();
+    };
+}
 
 export default UserProfile;
