@@ -5,6 +5,7 @@ import Table from 'react-bootstrap/Table';
 import Button from "react-bootstrap/Button";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import { Pagination, Card } from "react-bootstrap";
 
 class Profile extends React.Component {
     constructor(props) {
@@ -75,23 +76,28 @@ class Profile extends React.Component {
             <>
                 <NotificationContainer/>
                 <Navbar searchVisible={false} onChangeMethod={this.onSearchChange} onClickMethod={this.onSearchButton}></Navbar>
-                <div className="container">
+                <div style={{padding: '20px'}} className="container">
                     <div className="row">
-                        <div className="col-sm-2 bg-light text-center" style={{ borderBlock: '10', height: '100vh' }}>
-                            <h2 className="my-5">Anuncios clasificados</h2>
-                            <img alt="img1" style={{ maxWidth: '100%' }}
-                                src="https://cdn.pocket-lint.com/r/s/970x/assets/images/148296-games-review-xbox-one-s-all-digital-edition-product-shots-image1-xct4hs5njv-jpg.webp">
-                            </img>
-                            <h4>Xbox one usado</h4>
-                            <p>500gb</p>
-                            <p>Un control incluido</p>
-                            <p style={{ fontWeight: 'bold' }}>$4000</p>
+                        <div className="col-sm-2" style={{borderBlock: '10', height: '100vh', position:'sticky', top:'20px'}}>
+                            <h2 className="my-5">¡No te lo pierdas!</h2>
+                            <Card border='info'>
+                                <Card.Img src='https://cdn.pocket-lint.com/r/s/970x/assets/images/148296-games-review-xbox-one-s-all-digital-edition-product-shots-image1-xct4hs5njv-jpg.webp' />
+                                <Card.Body>
+                                    <Card.Text>
+                                    <h4>Xbox one usado</h4>
+                                    <p>500gb</p>
+                                    <p>Un control incluido</p>
+                                    <p style={{ fontWeight: 'bold' }}>$4000</p>
+                                    </Card.Text>
+                                    <Button style={{color:'white', backgroundColor: '#66A0B7'}}>Ver este producto</Button>
+                                </Card.Body>
+                            </Card>
                         </div>
                         <div className="col-sm-9 ml-5">
                             <h1 className="my-5">¡Bienvenido al Bazar!</h1>
                             <h2 className="my-3">Productos que te pueden interesar...</h2>
                             <div className="table-wrapper">
-                                <Table striped bordered hover>
+                                <Table style={{color:'#2C3042', backgroundColor: '#66A0B7'}} borderless striped hover>
                                     <thead>
                                         <tr>
                                             <th>Nombre</th>
@@ -99,6 +105,7 @@ class Profile extends React.Component {
                                             <th>Categoría</th>
                                             <th>Precio</th>
                                             <th>Imagenes del producto</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -123,6 +130,7 @@ class Profile extends React.Component {
                                         })}
                                     </tbody>
                                 </Table>
+                                <Pagination />
                             </div>
                         </div>
                     </div>

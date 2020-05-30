@@ -1,10 +1,10 @@
 import React from "react";
 import { Navbar, Nav, FormControl, Button, Form } from "react-bootstrap";
 
-const NavBar = ({user,searchVisible, onChangeMethod, onClickMethod}) => (
-    <Navbar  expand="lg" style={{backgroundColor: '#2C85A8'}}>
+const NavBar = ({searchVisible, onChangeMethod, onClickMethod}) => (
+    <Navbar fixed='top' expand="lg" style={{backgroundColor: '#2C85A8'}}>
         <div className="container">
-            <Navbar.Brand style={{color: 'white'}} href="/feed" user={user} >Metropolitan Bazar</Navbar.Brand>
+            <Navbar.Brand style={{color: 'white'}} href="/feed">Metropolitan Bazar</Navbar.Brand>
             <div hidden={searchVisible}>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
