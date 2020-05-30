@@ -36,7 +36,7 @@ class Profile extends React.Component {
             .catch((error) => {
                 console.log(error);
             });
-    axios.get('http://localhost:4000/ads/')
+        axios.get('http://localhost:4000/ads/')
             .then(res => {
                 /*
                 this.setState({ ads: res.data });

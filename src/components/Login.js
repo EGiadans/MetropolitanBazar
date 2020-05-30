@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
 import axios from 'axios';
+import UserSession from '../UserSession';
 
 class Login extends React.Component {
     constructor(props) {
@@ -48,7 +49,6 @@ class Login extends React.Component {
             alert('El email o password son incorrectos')
         });
     };
-    
     render () {
         return(
             <>

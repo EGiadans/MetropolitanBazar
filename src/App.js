@@ -12,6 +12,7 @@ import {
     Switch,
     Route
 } from "react-router-dom";
+import MyAds from "./components/MyAds";
 
 function App() {
   return (

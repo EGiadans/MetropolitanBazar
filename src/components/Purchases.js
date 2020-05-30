@@ -32,24 +32,9 @@ class Sales extends React.Component {
         const { sales } = this.state;
         return (
             <>
-                <Navbar></Navbar>
                 <Navbar redirect={this.redirect}/>
                 <div className="container">
                     <div className="my-5 py-3">
-                        <Tabs defaultActiveKey="info" style={{fontSize: 20}}>
-                            <Tab eventKey="info" title="COMPRAS">
-                                <MyInfo name={"Eduardo Giadáns"}/>
-                            </Tab>
-                            <Tab eventKey="docs" title="Mis Documentos">
-                                <h1>Algo2</h1>
-                            </Tab>
-                            <Tab eventKey="payments" title="Mis Pagos">
-                                <h1>Algo3</h1>
-                            </Tab>
-                            <Tab eventKey="wish" title="Mi Wishlist">
-                                <h1>Algo4</h1>
-                            </Tab>
-                        </Tabs>
                         <h1>Mis Compras</h1>
                         <div className="table-wrapper">
                             <Table striped bordered hover>
