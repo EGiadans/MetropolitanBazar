@@ -25,6 +25,12 @@ let productSchema = new Schema({
     },
     url3 : {
         type: String
+    },
+    owner : {
+        type: String
+    },
+    purchasedBy: {
+        type: String
     }
 }, {
     collection: 'products'

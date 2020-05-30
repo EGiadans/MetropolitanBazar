@@ -63,7 +63,7 @@ router.route('/update-product/:id').put((req, res, next) => {
             console.log(error)
         } else {
             res.json(data);
-            console.log('Student updated successfully !')
+            console.log('Product updated successfully !')
         }
     })
 });
@@ -100,5 +100,24 @@ router.route('/search/:search').get((req, res) => {
     })
 });
 
+router.route('/my-sales/:email').get((req, res) => {
+    productSchema.find({owner: req.params.email}, (error, data) => {
+        if (error) {
+            return (error)
+        } else {
+            res.json(data)
+        }
+    })
+});
+
+router.route('/my-purchases/:email').get((req, res) => {
+    productSchema.find({purchasedBy: req.params.email}, (error, data) => {
+        if (error) {
+            return (error)
+        } else {
+            res.json(data)
+        }
+    })
+});
 
 module.exports = router;

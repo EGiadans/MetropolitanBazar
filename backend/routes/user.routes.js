@@ -1,10 +1,10 @@
-let mongoose = require('mongoose');
-express = require('express');
-bodyParser = require('body-parser');
-router = express.Router();
+const mongoose = require('mongoose');
+const express = require('express');
+const bodyParser = require('body-parser');
+const router = express.Router();
 const multer = require("multer");
 const uuid = require("uuid");
-path = require('path');
+const path = require('path');
 
 // User Model
 let userSchema = require('../models/User');
@@ -54,7 +54,7 @@ router.route('/create-user').post((req, res) => {
 // CREATE User wish
 router.route('/make-wish').post((req, res) => {
   let wish = {
-    "name": req.body.name, 
+    "name": req.body.name,
     "refId": req.body.id,
     "imgn": req.body.imgn
   }

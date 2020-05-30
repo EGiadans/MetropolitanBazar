@@ -23,6 +23,7 @@ function App() {
                       <Route path="/feed" component={Feed}/>
                       <Route path="/signup" component={Signup}/>
                       <Route path="/profile" component={Profile}/>
+                      <Route path="/profile/my-ads" component={MyAds}/>
                       <Route path="/sales" component={Sales}/>
                       <Route path="/purchases" component={Purchases}/>
                       <Route path="/" component={Login}/>

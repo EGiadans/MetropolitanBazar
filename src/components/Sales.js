@@ -5,6 +5,8 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Table from "react-bootstrap/Table";
 import moment from "moment";
+import UserProfile from "../UserSession";
+
 class Sales extends React.Component {
     constructor(props) {
         super(props);
@@ -21,7 +23,7 @@ class Sales extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:4000/products/')
+        axios.get('http://localhost:4000/products/my-sales/'+UserProfile.getName('email'))
             .then(res => {
                 this.setState({
                     sales: res.data
@@ -58,7 +60,9 @@ class Sales extends React.Component {
                 date,
                 url1: res.data[0].url,
                 url2: res.data[1].url,
-                url3: res.data[2].url
+                url3: res.data[2].url,
+                owner: UserProfile.getName('email'),
+                purchasedBy: ''
             };
             axios.post('http://localhost:4000/products/create-product', product)
                 .then(() => {
@@ -68,14 +72,25 @@ class Sales extends React.Component {
         });
     };
 
+    handleChange = (e) => {
+        const { array } = this.state;
+        const newImage = e.target.files[0];
+        array.push(newImage);
+        this.setState(array);
+    };
+
+    redirect = () => {
+      this.props.history.push('/login');
+    };
+
     render() {
         const { name, description, category, price, sales } = this.state;
         return (
             <>
-                <Navbar></Navbar>
+                <Navbar redirect={this.redirect} />
                 <div className="container">
                     <div className="row">
-                    <div className="col-sm-6">
+                        <div className="col-sm-6">
                             <div className="mt-5 py-3">
                                 <h1>Realizar una nueva venta</h1>
                                 <p className="pr-5 text-justify">Introduce los detalles del producto que deseas poner a la venta
@@ -126,7 +141,7 @@ class Sales extends React.Component {
                             </div>
                         </div>
                         <div className="col-sm-6">
-                            <h2 className="text-center mt-5 py-3">Mis productos en venta</h2>
+                            <h2 className="text-center mt-5 py-3">Los productos que he puesto a la venta</h2>
                             <div className="table-wrapper">
                                 <Table striped bordered hover>
                                     <thead>

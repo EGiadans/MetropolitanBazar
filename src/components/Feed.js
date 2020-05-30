@@ -13,7 +13,7 @@ class Profile extends React.Component {
         this.state = {
             products: [],
             search: '',
-            email: ''
+            ad: {}
         };
     }
 
@@ -36,21 +36,30 @@ class Profile extends React.Component {
             .catch((error) => {
                 console.log(error);
             });
-    }
+    axios.get('http://localhost:4000/ads/')
+            .then(res => {
+                /*
+                this.setState({ ads: res.data });
+                const { ads } = this.state;
+                 */
+                const random = Math.random() * (+res.data.length - +0) + +0;
+                const randomAd = res.data[Math.floor(random)];
+                this.setState({ad: randomAd});
+            });
+    };
 
     showWishList = (productId,productName, productUrl) => {
         const wish = {
             id: productId,
             name: productName,
             imgn: 'productUrl'
-        }
-        console.log(wish)
+        };
         axios.post('http://localhost:4000/user/make-wish',wish)
             .then(res => {
                 NotificationManager.success('Listo', 'Agregado a tu wishlist');
             })
             .catch((error) => {
-                NotificationManager.warning('Listo', 'No se pudo hacer el deseo');
+                NotificationManager.warning('Lo sentimos', 'No se pudo hacer el deseo');
             });
 
     };
@@ -68,26 +77,29 @@ class Profile extends React.Component {
         .catch(error => {
             console.log(error);
         });
-    }
+    };
 
-    render() {
-        const { products } = this.state;    
+    redirect = () => {
+        this.props.history.push('/login');
+    };
+
+    render(){
+        const { products, ad } = this.state;    
         return (
             <>
                 <NotificationContainer/>
-                <Navbar searchVisible={false} onChangeMethod={this.onSearchChange} onClickMethod={this.onSearchButton}></Navbar>
+                <Navbar searchVisible={false} onChangeMethod={this.onSearchChange} onClickMethod={this.onSearchButton} redirect={this.redirect}></Navbar>
                 <div style={{padding: '20px'}} className="container">
                     <div className="row">
                         <div className="col-sm-2" style={{borderBlock: '10', height: '100vh', position:'sticky', top:'20px'}}>
                             <h2 className="my-5">¡No te lo pierdas!</h2>
                             <Card border='info'>
-                                <Card.Img src='https://cdn.pocket-lint.com/r/s/970x/assets/images/148296-games-review-xbox-one-s-all-digital-edition-product-shots-image1-xct4hs5njv-jpg.webp' />
+                                <Card.Img src={ad.imageUrl} />
                                 <Card.Body>
                                     <Card.Text>
-                                    <h4>Xbox one usado</h4>
-                                    <p>500gb</p>
-                                    <p>Un control incluido</p>
-                                    <p style={{ fontWeight: 'bold' }}>$4000</p>
+                                    <h4>{ad.title}</h4>
+                                    <p>{ad.description}</p>
+                                    <p style={{ fontWeight: 'bold' }}>${ad.price}</p>
                                     </Card.Text>
                                     <Button style={{color:'white', backgroundColor: '#66A0B7'}}>Ver este producto</Button>
                                 </Card.Body>

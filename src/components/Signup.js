@@ -61,13 +61,13 @@ class Signup extends React.Component {
     }
 
 
-    
+
 
     onSubmit = (e) =>{
         if (this.state.hashpassword !== this.state.cpassword){
             alert('Passwords dont match')
         } else {
-        
+
         e.preventDefault();
         const user = {
             name: this.state.name,
@@ -78,7 +78,7 @@ class Signup extends React.Component {
         }
 
         console.log(user);
-        
+
         axios.post('http://localhost:4000/user/create-user', user)
         .then(res => {
             this.props.history.push({
@@ -101,7 +101,7 @@ class Signup extends React.Component {
                     backgroundPosition: 'center',
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
-                    backgroundImage: 'url(https://www.visitmexico.com/wp-content/uploads/2020/02/tamaulipas_destinos-principales_tampico_04.jpg)'
+                    backgroundImage: 'url(https://res.cloudinary.com/dvg0v2vjr/image/upload/v1590736842/tampico_ejqx30.jpg)'
                 }}>
                 <div className="">
                     <div className="row">

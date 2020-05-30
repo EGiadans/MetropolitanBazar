@@ -5,12 +5,16 @@ import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import Modal from "react-bootstrap/Modal";
+import UserProfile from "../UserSession";
 
 class ProductDetails extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            product: {}
+            product: {},
+            show: false,
+            setShow: false
         };
     }
 
@@ -54,8 +58,33 @@ class ProductDetails extends React.Component {
         NotificationManager.success('Listo', 'Agregado a tu wishlist');
     };
 
-    render() {
+    handleClose = () => {
+        this.setState({setShow: false, show: false});
+    };
+
+    handleShow = () => {
+        this.setState({setShow: true, show: true });
+    };
+
+    handleBuy = () => {
+        //Agregar visibility del producto como campo en bd, con esta accion se debe cambiar a FALSE
         const { product } = this.state;
+        console.log(product);
+        axios.put('http://localhost:4000/products/update-product/' + product._id,
+            {
+                purchasedBy: UserProfile.getName('email')
+            }).then( () => {
+                NotificationManager.success('Has comprado este producto. Revisa tu email para los detalles de tu pedido.','Éxito');
+                setTimeout(() => {  this.props.history.push('/feed'); }, 5000);
+            }).catch( () => {
+                NotificationManager.error('Ha ocurrido un error al procesar tu pago, intenta más tarde.', 'Error');
+                this.setState({setShow: false, show: false});
+        });
+
+    };
+
+    render() {
+        const { product, show } = this.state;
         return (
             <>
                 <NotificationContainer/>
@@ -93,17 +122,31 @@ class ProductDetails extends React.Component {
                                 </Carousel.Item>
                             </Carousel>
                             <div className="mt-3 text-center">
-                                <Button className="btn-success mr-3"> <i className="fas fa-dollar-sign" />
+                                <Button className="btn-success mr-3" onClick={this.handleShow}> <i className="fas fa-dollar-sign" />
                                     &nbsp;Comprar
                                 </Button>
                                 <Button onClick={() => this.showWishList()} className="btn-warning"><i className="fas fa-star"/>
                                     &nbsp;Agregar a mi Wishlist
                                 </Button>
                             </div>
-
+                            
                         </div>
                     </div>
                 </div>
+                <Modal show={show} onHide={this.handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Comprar producto</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>¿Estás seguro que deseas comprar este producto?</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.handleClose}>
+                            Cancelar
+                        </Button>
+                        <Button variant="success" onClick={this.handleBuy}>
+                            Aceptar
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </>
         );
     }

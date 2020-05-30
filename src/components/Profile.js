@@ -4,8 +4,10 @@ import {Tab, Tabs } from "react-bootstrap";
 import MyInfo from "./MyInfo";
 import axios from 'axios';
 import MyDocs from "./MyDocs";
+import MyAds from "./MyAds";
 import Button from "react-bootstrap/Button";
 import Wishlist from "./Wishlist";
+import UserSession from '../UserSession';
 
 
 class Profile extends React.Component {
@@ -28,7 +30,7 @@ class Profile extends React.Component {
         this.onActaChange = this.onActaChange.bind(this);
         this.onWishSubmit = this.onActaSubmit.bind(this);
         this.onWishChange = this.onActaChange.bind(this);
-         
+
     }
 
     onActaChange(e){
@@ -81,7 +83,9 @@ class Profile extends React.Component {
     }
 
     componentDidMount() {
-        const hemail = this.props.location.state.email
+        //console.log(UserSession.getName('email'));
+        //const hemail = this.props.location.state.email
+        const hemail = UserSession.getName('email');
         axios.get('http://localhost:4000/user/profile', {
             params: {
                 email: hemail
@@ -101,11 +105,14 @@ class Profile extends React.Component {
                 console.log(error);
             })
     }
+    redirect = () => {
+        this.props.history.push('/login');
+    };
 
     render() {
         return (
             <>
-            <Navbar user = {this.state.email}></Navbar>
+            <Navbar redirect={this.redirect}></Navbar>
             <div className="container">
                 <div className="my-5 py-3">
                     <Tabs style={{fontSize: 20}}>
@@ -113,6 +120,9 @@ class Profile extends React.Component {
                             <MyInfo name={this.state.name} lastname={this.state.lastname} email={this.state.email} password={this.state.password}/>
                         </Tab>
                         <Tab eventKey="docs" title="Mis Documentos">
+                            {/*
+                            //Check why MyDocs Component is missing from here
+
                         <div className="container bg-light">
                             <div className="row">
                                 <div className="col-sm-12">
@@ -131,6 +141,10 @@ class Profile extends React.Component {
                                 </div>
                             </div>
                         </div>
+                            */}
+                        </Tab>
+                        <Tab eventKey="ads" title="Mis Anuncios">
+                            <MyAds history={this.props.history}/>
                         </Tab>
                         <Tab eventKey="wish" title="Mi Wishlist">
                             {this.state.wishesLoaded && <Wishlist wishes={this.state.wishes} goToWish={this.goToWish}/>}
