@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import moment from "moment";
 import axios from "axios";
 import UserProfile from "../UserSession";
+import { Form } from "react-bootstrap";
 
 class MyAds extends React.Component {
     constructor(props) {
@@ -67,13 +68,26 @@ class MyAds extends React.Component {
                             <h1 className="my-5"><i className="fas fa-ad" /> Crea aqui tu anuncio</h1>
                             <h4 className="pb-3">Esta sección te permite crear anuncios clasificados para promocionar un producto que quieras poner
                                 a la venta </h4>
-                            <form>
-                                <label><b> Nombre del producto: </b></label><input id="title" name="" type="text" placeholder="" onChange={this.onInputChange} /><br/>
-                                <label><b> Descripción: </b></label><input id="description" name="" type="text" placeholder="" onChange={this.onInputChange} /><br/>
-                                <label><b> Precio de venta: </b></label><input id="price" name="" type="text" placeholder="" onChange={this.onInputChange} /><br/>
-                                <label><b> Imagen del producto: </b></label><input id="image" name="" type="file" placeholder="" onChange={this.handleChange.bind(this)}/><br/>
+
+                            <Form>
+                                <Form.Group controlId = 'title'>
+                                    <Form.Label><b>Nombre del producto</b></Form.Label>
+                                    <Form.Control className='col-md-3' type="text" placeholder="" onChange={this.onInputChange} />
+                                </Form.Group>
+                                <Form.Group controlId = 'description'>
+                                    <Form.Label><b>Descripción</b></Form.Label>
+                                    <Form.Control as="textarea" placeholder="" onChange={this.onInputChange} />
+                                </Form.Group>
+                                <Form.Group controlId = 'price'>
+                                    <Form.Label><b>Precio de venta</b></Form.Label>
+                                    <Form.Control className='col-md-3' type="text" placeholder="" onChange={this.onInputChange} />
+                                </Form.Group>
+                                <Form.Group controlId = 'image'>
+                                    <Form.Label><b>Imagen del producto</b></Form.Label>
+                                    <Form.Control type="file" placeholder="" onChange={this.handleChange.bind(this)} />
+                                </Form.Group>
                                 <Button className="btn-primary" onClick={this.onSubmit}>Cambiar</Button>
-                            </form>
+                            </Form>
                         </div>
                     </div>
                 </div>

@@ -101,7 +101,7 @@ class Profile extends React.Component {
                                     <p>{ad.description}</p>
                                     <p style={{ fontWeight: 'bold' }}>${ad.price}</p>
                                     </Card.Text>
-                                    <Button style={{color:'white', backgroundColor: '#66A0B7'}}>Ver este producto</Button>
+                                    <Button onClick={() => this.redirectTo('ad.pid')} style={{color:'white', backgroundColor: '#66A0B7'}}>Ver este producto</Button>
                                 </Card.Body>
                             </Card>
                         </div>
@@ -109,7 +109,7 @@ class Profile extends React.Component {
                             <h1 className="my-5">¡Bienvenido al Bazar!</h1>
                             <h2 className="my-3">Productos que te pueden interesar...</h2>
                             <div className="table-wrapper">
-                                <Table style={{color:'#2C3042', backgroundColor: '#66A0B7'}} borderless striped hover>
+                                <Table style={{color:'white', backgroundColor: '#66A0B7'}} borderless striped hover>
                                     <thead>
                                         <tr>
                                             <th>Nombre</th>

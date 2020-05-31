@@ -26,7 +26,7 @@ class NavBar extends React.Component {
                             <Form inline hidden={searchVisible}>
                                 <FormControl type="text" placeholder="Buscar un producto..." className="mr-sm-2"
                                              onChange={onChangeMethod}/>
-                                <Button variant="outline-dark" onClick={onClickMethod}>Buscar</Button>
+                                <Button variant="dark" onClick={onClickMethod}>Buscar</Button>
                             </Form>
                             <Button className="btn-danger ml-5" onClick={this.onLogOut}>Cerrar sesión</Button>
                         </Navbar.Collapse>

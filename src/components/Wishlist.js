@@ -9,10 +9,12 @@ const Wishlist = (props) => (
             <h1 style={{color:'#2C85A8'}}>Estos son tus deseos</h1>
             <Table>
                 <thead> 
-                    <th>#</th>
-                    <th>Deseo</th>
-                    <th></th>
-                    <th></th>
+                    <tr>
+                        <th>#</th>
+                        <th>Deseo</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
                 </thead>
                     {props.wishes.map((wish, index) => (
                     <tr>
