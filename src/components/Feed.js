@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import { Pagination, Card } from "react-bootstrap";
+import UserSession from '../UserSession';
 
 class Profile extends React.Component {
     constructor(props) {
@@ -50,9 +51,10 @@ class Profile extends React.Component {
 
     showWishList = (productId,productName, productUrl) => {
         const wish = {
+            user: UserSession.getName('email'),
             id: productId,
             name: productName,
-            imgn: 'productUrl'
+            imgn: productUrl
         };
         axios.post('http://localhost:4000/user/make-wish',wish)
             .then(res => {

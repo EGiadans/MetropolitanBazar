@@ -20,8 +20,8 @@ const Wishlist = (props) => (
                     <tr>
                         <td>{index+1}</td>
                         <td>{wish.name}</td>
-                        <td> 
-                        <img alt="img" src={wish.imgn} style={{ maxWidth: '30%' }} />
+                        <td align='center'> 
+                        <img alt="img" src={wish.imgn} style={{ maxWidth: '20%' }} />
                         </td>
                         <td>
                         <Button style={{ marginLeft: "auto", float: "right" }} variant="info" onClick={() => props.goToWish(wish.refId)}>Ver Deseo</Button>

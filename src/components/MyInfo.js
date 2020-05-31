@@ -15,12 +15,12 @@ const MyInfo = ({name, lastname, email, password}) => (
             </div>
             <div className="col-sm-9">
                 <Form className="mx-5 my-5">
-                        <Form.Label>Nombre</Form.Label>
-                        <Form.Control plaintext type="text" value={name +' '+ lastname} />
-                        <Form.Label>Correo Electronico</Form.Label>
-                        <Form.Control plaintext type="email" value={email} />
-                        <Form.Label>Contraseña</Form.Label>
-                        <Form.Control plaintext type="password" value={password} />
+                        <Form.Label lg={2}>Nombre</Form.Label>
+                        <Form.Control size="lg" plaintext type="text" value={name +' '+ lastname} />
+                        <Form.Label lg={2}>Correo Electronico</Form.Label>
+                        <Form.Control size="lg" plaintext type="email" value={email} />
+                        <Form.Label lg={2}>Contraseña</Form.Label>
+                        <Form.Control size="lg" plaintext type="password" value={password} />
                 </Form>
             </div>
         </div>
