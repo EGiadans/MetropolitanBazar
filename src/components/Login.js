@@ -49,7 +49,6 @@ class Login extends React.Component {
             alert('El email o password son incorrectos')
         });
     };
-
     render () {
         return(
             <>
@@ -83,13 +82,13 @@ class Login extends React.Component {
                                         <div className="form-group">
                                             <input required value = {this.state.password} onChange = {this.onChangePassword.bind(this)} type="password" placeholder='Contraseña' style={{width: '70%'}}/>
                                         </div>
-                                        <button  type="submit" className="btn mt-5" style={{width: '45%', backgroundColor: '#80ffcc', color: 'white'}}>
+                                        <button  type="submit" className="btn mt-5" style={{width: '45%', backgroundColor: '#2C85A8', color: 'white'}}>
                                         Iniciar Sesion
                                         </button>
                                     </div>
                                 </form>
                                 <h6 className="text-center">¿Aún no tienes cuenta?</h6>
-                                <Link to="/signup" style={{color: '#80ffcc', fontWeight: 'bold', fontSize: 20}}>Registrate</Link>
+                                <Link to="/signup" style={{color: '#2C85A8', fontWeight: 'bold', fontSize: 20}}>Registrate</Link>
                             </div>
                         </div>
                     </div>

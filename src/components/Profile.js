@@ -116,7 +116,7 @@ class Profile extends React.Component {
             <div className="container">
                 <div className="my-5 py-3">
                     <Tabs style={{fontSize: 20}}>
-                        <Tab eventKey="info" title="Mi Información">
+                        <Tab style={{color: '#286DBF'}} eventKey="info" title="Mi Información">
                             <MyInfo name={this.state.name} lastname={this.state.lastname} email={this.state.email} password={this.state.password}/>
                         </Tab>
                         <Tab eventKey="docs" title="Mis Documentos">

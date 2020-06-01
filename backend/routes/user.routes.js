@@ -55,9 +55,10 @@ router.route('/create-user').post((req, res) => {
 router.route('/make-wish').post((req, res) => {
   let wish = {
     "name": req.body.name,
-    "refId": req.body.id
+    "refId": req.body.id,
+    "imgn": req.body.imgn
   }
-  userSchema.findOneAndUpdate({email: 'riveratwister2@gmail.com'}, {
+  userSchema.findOneAndUpdate({email: req.body.user}, {
     $push: {wishes: wish}}, (error, data) => {
     if (error) {
       console.log(error)

@@ -91,14 +91,14 @@ class ProductDetails extends React.Component {
                 <Navbar></Navbar>
                 <div className="container mt-5 px-5">
                     <div className="row">
-                        <div className="col-sm-8 mt-5">
+                        <div style={{color: '#1E5D75'}} className="col-sm-8 mt-5">
                             <h1>{product.name}</h1>
                             <h3 className="mt-5"><b>Precio:</b> ${product.price}</h3>
                             <h4 className="mt-3"><b>Categoría: </b><br/>{product.category}</h4>
                             <h4 className="mt-3"><b>Descripción del producto: </b><br/>{product.description}</h4>
                         </div>
                         <div className="col-sm-4 mt-5 mt-5 pt-3">
-                            <Carousel className="bg-dark">
+                            <Carousel style={{backgroundColor:'#2C85A8'}}>
                                 <Carousel.Item>
                                     <img
                                         className="d-block w-50 h-50 mx-auto"
@@ -129,7 +129,7 @@ class ProductDetails extends React.Component {
                                     &nbsp;Agregar a mi Wishlist
                                 </Button>
                             </div>
-
+                            
                         </div>
                     </div>
                 </div>
