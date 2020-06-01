@@ -1,3 +1,3 @@
 module.exports = {
-    db: 'mongodb://localhost:27017/acme'
+    db: "mongodb+srv://MegaUser:jgCSEUArMqtS63vs@myclustermongo-qhy1t.mongodb.net/test?retryWrites=true&w=majority"
   };
