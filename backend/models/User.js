@@ -35,6 +35,9 @@ let userSchema = new Schema({
     }],
     telephone: {
         type: String
+    },
+    ine: {
+        type: String
     }
 
 }, {

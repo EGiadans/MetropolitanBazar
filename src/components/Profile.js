@@ -5,27 +5,27 @@ import MyInfo from "./MyInfo";
 import axios from 'axios';
 import MyDocs from "./MyDocs";
 import MyAds from "./MyAds";
-import Button from "react-bootstrap/Button";
 import Wishlist from "./Wishlist";
-import UserSession from '../UserSession';
-
+import UserProfile from '../UserSession';
 
 class Profile extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-                name: '',
-                lastname: '',
-                email: '',
-                password: '',
-                acta: null,
-                nwish: '',
-                wishes: {
-                    name: 'prueba'
-                },
-                wishesLoaded: false,
-                telephone: ''
+            name: '',
+            lastname: '',
+            email: '',
+            password: '',
+            acta: '',
+            nwish: '',
+            wishes: {
+                name: 'prueba'
+            },
+            wishesLoaded: false,
+            telephone: '',
+            ine: '',
+            arrayIne: []
         };
         this.onActaSubmit = this.onActaSubmit.bind(this);
         this.onActaChange = this.onActaChange.bind(this);
@@ -86,7 +86,7 @@ class Profile extends React.Component {
     componentDidMount() {
         //console.log(UserSession.getName('email'));
         //const hemail = this.props.location.state.email
-        const hemail = UserSession.getName('email');
+        const hemail = UserProfile.getName('email');
         axios.get('http://localhost:4000/user/profile', {
             params: {
                 email: hemail
@@ -100,8 +100,11 @@ class Profile extends React.Component {
                     password: response.data[0].hashpassword,
                     wishes: response.data[0].wishes,
                     wishesLoaded: true,
-                    telephone: response.data[0].telephone
+                    telephone: response.data[0].telephone,
+                    acta: response.data[0].acta,
+                    ine: response.data[0].ine
                 });
+                UserProfile.setName('userId', response.data[0]._id)
             })
             .catch(function (error){
                 console.log(error);
@@ -126,6 +129,10 @@ class Profile extends React.Component {
                             <MyInfo name={this.state.name} lastname={this.state.lastname} email={this.state.email} password={this.state.password} onClicky={this.showData} telephone={this.state.telephone}/>
                         </Tab>
                         <Tab eventKey="docs" title="Mis Documentos">
+                            <MyDocs
+                                history={this.props.history}
+                                acta={this.state.acta}
+                                ine={this.state.ine}/>
                             {/*
                             //Check why MyDocs Component is missing from here
 

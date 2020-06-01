@@ -75,7 +75,9 @@ class Signup extends React.Component {
             username: this.state.username,
             email: this.state.email,
             hashpassword: this.state.hashpassword,
-            telephone: this.state.telephone
+            telephone: this.state.telephone,
+            ine: 'null',
+            acta: 'null'
         };
 
         console.log(user);
