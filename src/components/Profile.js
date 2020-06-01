@@ -24,7 +24,8 @@ class Profile extends React.Component {
                 wishes: {
                     name: 'prueba'
                 },
-                wishesLoaded: false
+                wishesLoaded: false,
+                telephone: ''
         };
         this.onActaSubmit = this.onActaSubmit.bind(this);
         this.onActaChange = this.onActaChange.bind(this);
@@ -98,7 +99,8 @@ class Profile extends React.Component {
                     email: response.data[0].email,
                     password: response.data[0].hashpassword,
                     wishes: response.data[0].wishes,
-                    wishesLoaded: true
+                    wishesLoaded: true,
+                    telephone: response.data[0].telephone
                 });
             })
             .catch(function (error){
@@ -109,6 +111,10 @@ class Profile extends React.Component {
         this.props.history.push('/login');
     };
 
+    showData = () => {
+      console.log(this.state);
+    };
+
     render() {
         return (
             <>
@@ -117,7 +123,7 @@ class Profile extends React.Component {
                 <div className="my-5 py-3">
                     <Tabs style={{fontSize: 20}}>
                         <Tab style={{color: '#286DBF'}} eventKey="info" title="Mi Información">
-                            <MyInfo name={this.state.name} lastname={this.state.lastname} email={this.state.email} password={this.state.password}/>
+                            <MyInfo name={this.state.name} lastname={this.state.lastname} email={this.state.email} password={this.state.password} onClicky={this.showData} telephone={this.state.telephone}/>
                         </Tab>
                         <Tab eventKey="docs" title="Mis Documentos">
                             {/*

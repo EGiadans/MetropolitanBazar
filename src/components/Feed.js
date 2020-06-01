@@ -49,7 +49,7 @@ class Profile extends React.Component {
             });
     };
 
-    showWishList = (productId,productName, productUrl) => {
+    adToWishList = (productId, productName, productUrl, productVisible) => {
         const wish = {
             user: UserSession.getName('email'),
             id: productId,
@@ -61,7 +61,7 @@ class Profile extends React.Component {
                 NotificationManager.success('Listo', 'Agregado a tu wishlist');
             })
             .catch((error) => {
-                NotificationManager.warning('Lo sentimos', 'No se pudo hacer el deseo');
+                NotificationManager.warning('Lo sentimos', 'No se pudo hacer el deseo debido a '+error);
             });
 
     };
@@ -86,7 +86,7 @@ class Profile extends React.Component {
     };
 
     render(){
-        const { products, ad } = this.state;    
+        const { products, ad } = this.state;
         return (
             <>
                 <NotificationContainer/>
@@ -103,7 +103,8 @@ class Profile extends React.Component {
                                     <p>{ad.description}</p>
                                     <p style={{ fontWeight: 'bold' }}>${ad.price}</p>
                                     </Card.Text>
-                                    <Button onClick={() => this.redirectTo('ad.pid')} style={{color:'white', backgroundColor: '#66A0B7'}}>Ver este producto</Button>
+                                    <a href={`mailto:${ad.owner}`}>Obtener mas Información</a>
+
                                 </Card.Body>
                             </Card>
                         </div>
@@ -125,6 +126,7 @@ class Profile extends React.Component {
                                     <tbody>
                                         {products.map((product) => {
                                             return (
+                                                product.visibility !== 0 ?
                                                 <tr>
                                                     <td>{product.name}</td>
                                                     <td>{product.description}</td>
@@ -137,9 +139,11 @@ class Profile extends React.Component {
                                                     </td>
                                                     <td>
                                                         <Button onClick={() => this.redirectTo(product._id)}>Ver este producto</Button>
-                                                        <Button onClick={() => this.showWishList(product._id, product.name, product.url1)} className="btn-warning mt-2"><i className="fas fa-star"/>&nbsp;Agregar a Wishlist</Button>
+                                                        <Button onClick={() => this.adToWishList(product._id, product.name, product.url1)} className="btn-warning mt-2"><i className="fas fa-star"/>&nbsp;Agregar a Wishlist</Button>
                                                     </td>
                                                 </tr>
+                                                    :
+                                                    null
                                             );
                                         })}
                                     </tbody>

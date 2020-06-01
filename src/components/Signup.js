@@ -5,7 +5,6 @@ class Signup extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.onChangeName = this.onChangeName.bind(this);
         this.onChangeLastName = this.onChangeLastName.bind(this);
         this.onChangeUserName = this.onChangeUserName.bind(this);
@@ -13,14 +12,14 @@ class Signup extends React.Component {
         this.onChangeHashpassword = this.onChangeHashpassword.bind(this);
         this.onChangeCpassword = this.onChangeCpassword.bind(this);
 
-
         this.state = {
             name: '',
             lastname: '',
             username: '',
             email: '',
             hashpassword: '',
-            cpassword:''
+            cpassword:'',
+            telephone: ''
         }
     }
 
@@ -58,10 +57,11 @@ class Signup extends React.Component {
         this.setState({
             cpassword: e.target.value
         });
-    }
+    };
 
-
-
+    onChangeTelephone = (e) => {
+        this.setState({ telephone: e.target.value })
+    };
 
     onSubmit = (e) =>{
         if (this.state.hashpassword !== this.state.cpassword){
@@ -75,14 +75,15 @@ class Signup extends React.Component {
             username: this.state.username,
             email: this.state.email,
             hashpassword: this.state.hashpassword,
-        }
+            telephone: this.state.telephone
+        };
 
         console.log(user);
 
         axios.post('http://localhost:4000/user/create-user', user)
         .then(res => {
             this.props.history.push({
-                pathname: '/profile',
+                pathname: '/login',
                 state: { email: this.state.email,
                     }
                 })
@@ -138,6 +139,9 @@ class Signup extends React.Component {
                                         </div>
                                         <div className="form-group">
                                             <input required value = {this.state.cpassword} onChange = {this.onChangeCpassword.bind(this)} type="password" placeholder='Confirmar Contraseña' style={{width: '70%'}}/>
+                                        </div>
+                                        <div className="form-group">
+                                            <input required value = {this.state.telephone} onChange = {this.onChangeTelephone.bind(this)} type="numbers" placeholder='Teléfono celular' minLength="10" maxLength="10" style={{width: '70%'}}/>
                                         </div>
 
                                         <button type="submit" className="btn mt-5"

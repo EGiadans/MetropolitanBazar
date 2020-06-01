@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Table from "react-bootstrap/Table";
 import moment from "moment";
 import UserProfile from "../UserSession";
+import Spinner from "react-bootstrap/Spinner";
 
 class Sales extends React.Component {
     constructor(props) {
@@ -18,7 +19,8 @@ class Sales extends React.Component {
             date: '',
             sales: [],
             file1: '',
-            array: []
+            array: [],
+            loading: false
         };
     }
 
@@ -44,6 +46,7 @@ class Sales extends React.Component {
     onSubmit = (e) => {
         e.preventDefault();
         const {name, description, category, price, array} = this.state;
+        this.setState({ loading: true });
         const date = moment().format();
         const formData = new FormData();
         array.forEach((file, i) => {
@@ -62,11 +65,12 @@ class Sales extends React.Component {
                 url2: res.data[1].url,
                 url3: res.data[2].url,
                 owner: UserProfile.getName('email'),
-                purchasedBy: ''
+                purchasedBy: '',
+                visibility: 1
             };
             axios.post('http://localhost:4000/products/create-product', product)
                 .then(() => {
-                    this.setState({ name: '', description: '', category: '', price: '' });
+                    this.setState({ name: '', description: '', category: '', price: '', loading: false });
                     this.props.history.push("/feed");
                 });
         });
@@ -84,7 +88,7 @@ class Sales extends React.Component {
     };
 
     render() {
-        const { name, description, category, price, sales } = this.state;
+        const { name, description, category, price, sales, loading } = this.state;
         return (
             <>
                 <Navbar redirect={this.redirect} />
@@ -134,9 +138,16 @@ class Sales extends React.Component {
                                         <Form.Control name="file3" type="file" onChange={this.handleChange.bind(this)} required/>
                                     </Form.Group>
 
-                                    <Button variant="success" size="lg" type="submit">
-                                        ¡Poner a la venta!
+                                    <Button variant="success" size="lg" type="submit" disabled={loading}>
+                                        ¡Poner a la venta!&nbsp;&nbsp;
+                                        {loading ?
+                                            <Spinner animation="border" role="status" variant="light">
+                                                <span className="sr-only">Loading...</span>
+                                            </Spinner>
+                                            : null
+                                        }
                                     </Button>
+
                                 </Form>
                             </div>
                         </div>

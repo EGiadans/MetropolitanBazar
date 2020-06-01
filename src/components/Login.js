@@ -40,7 +40,7 @@ class Login extends React.Component {
         axios.post('http://localhost:4000/user/login-user', user)
         .then( res => {
             this.props.history.push({
-                pathname: '/profile',
+                pathname: '/feed',
                 state: { email: this.state.email,
                     }
                 })

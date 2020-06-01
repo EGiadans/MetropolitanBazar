@@ -6,9 +6,9 @@ import { Table } from "react-bootstrap";
 const Wishlist = (props) => (
     <div className="container bg-light">
         <div>
-            <h1 style={{color:'#2C85A8'}}>Estos son tus deseos</h1>
+            <h1 style={{color:'#2C85A8'}}>Estos son los productos de tu lista</h1>
             <Table>
-                <thead> 
+                <thead>
                     <tr>
                         <th>#</th>
                         <th>Deseo</th>
@@ -17,17 +17,19 @@ const Wishlist = (props) => (
                     </tr>
                 </thead>
                     {props.wishes.map((wish, index) => (
+                        wish.visibility !== 0 ?
                     <tr>
                         <td>{index+1}</td>
                         <td>{wish.name}</td>
-                        <td align='center'> 
+                        <td align='center'>
                         <img alt="img" src={wish.imgn} style={{ maxWidth: '20%' }} />
                         </td>
                         <td>
                         <Button style={{ marginLeft: "auto", float: "right" }} variant="info" onClick={() => props.goToWish(wish.refId)}>Ver Deseo</Button>
                         </td>
-                        
+
                     </tr>
+                            : null
                     ))}
             </Table>
         </div>

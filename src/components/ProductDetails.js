@@ -7,6 +7,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import 'react-notifications/lib/notifications.css';
 import Modal from "react-bootstrap/Modal";
 import UserProfile from "../UserSession";
+import moment from "moment";
 
 class ProductDetails extends React.Component {
     constructor(props) {
@@ -25,6 +26,10 @@ class ProductDetails extends React.Component {
                 this.setState({
                     product: res.data
                 });
+                const { product } = this.state;
+                if (product.visibility === 0) {
+                    this.props.history.push('/feed');
+                }
             })
             .catch((error) => {
                 console.log(error);
@@ -72,7 +77,9 @@ class ProductDetails extends React.Component {
         console.log(product);
         axios.put('http://localhost:4000/products/update-product/' + product._id,
             {
-                purchasedBy: UserProfile.getName('email')
+                purchasedBy: UserProfile.getName('email'),
+                purchasedAt: moment().format(),
+                visibility: 0
             }).then( () => {
                 NotificationManager.success('Has comprado este producto. Revisa tu email para los detalles de tu pedido.','Éxito');
                 setTimeout(() => {  this.props.history.push('/feed'); }, 5000);
@@ -129,7 +136,7 @@ class ProductDetails extends React.Component {
                                     &nbsp;Agregar a mi Wishlist
                                 </Button>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>

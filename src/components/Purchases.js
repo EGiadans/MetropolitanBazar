@@ -3,6 +3,7 @@ import Navbar from "./NavBar";
 import Table from "react-bootstrap/Table";
 import UserProfile from "../UserSession";
 import axios from "axios";
+import moment from 'moment';
 
 class Sales extends React.Component {
     constructor(props) {
@@ -42,7 +43,7 @@ class Sales extends React.Component {
                                 <tr>
                                     <th>Nombre del producto</th>
                                     <th>Imagen</th>
-                                    <th>Fecha de la publicación</th>
+                                    <th>Fecha de la compra</th>
                                     <th>Cantidad</th>
                                 </tr>
                                 </thead>
@@ -58,7 +59,7 @@ class Sales extends React.Component {
                                                         maxWidth: '10%'
                                                     }}/>
                                             </td>
-                                            <td>{sale.date}</td>
+                                            <td>{moment(sale.purchasedAt).format('DD MMMM YYYY')}</td>
                                             <td>${sale.price}</td>
                                         </tr>
                                     );

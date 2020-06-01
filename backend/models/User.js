@@ -25,17 +25,20 @@ let userSchema = new Schema({
         required: true,
         trim:true
     },
-    
+
     acta: String,
 
     wishes: [{
         name: String,
         refId: String,
         imgn: String
-    }]
-    
+    }],
+    telephone: {
+        type: String
+    }
+
 }, {
     collection: 'users'
-})
+});
 
-module.exports = mongoose.model('User', userSchema)
+module.exports = mongoose.model('User', userSchema);

@@ -86,7 +86,7 @@ class MyAds extends React.Component {
                                     <Form.Label><b>Imagen del producto</b></Form.Label>
                                     <Form.Control type="file" placeholder="" onChange={this.handleChange.bind(this)} />
                                 </Form.Group>
-                                <Button className="btn-primary" onClick={this.onSubmit}>Cambiar</Button>
+                                <Button className="btn-primary" onClick={this.onSubmit}>Publicar anuncio</Button>
                             </Form>
                         </div>
                     </div>

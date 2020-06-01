@@ -31,6 +31,12 @@ let productSchema = new Schema({
     },
     purchasedBy: {
         type: String
+    },
+    purchasedAt: {
+        type: String
+    },
+    visibility: {
+        type: Number
     }
 }, {
     collection: 'products'
