@@ -91,7 +91,7 @@ class Sales extends React.Component {
         const { name, description, category, price, sales, loading } = this.state;
         return (
             <>
-                <Navbar redirect={this.redirect} />
+                <Navbar searchVisible = {true} redirect={this.redirect} />
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-6">

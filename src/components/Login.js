@@ -60,7 +60,7 @@ class Login extends React.Component {
                     backgroundRepeat: 'no-repeat',
                     backgroundImage: 'url(https://res.cloudinary.com/dvg0v2vjr/image/upload/v1590736842/tampico_ejqx30.jpg)'
                 }}>
-                <NavBar searchVisible={true}/>
+                <NavBar loggedIn={true}/>
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-12">

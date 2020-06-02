@@ -9,13 +9,13 @@ class NavBar extends React.Component {
     };
 
     render(){
-        const { searchVisible, onChangeMethod, onClickMethod } = this.props;
+        const { loggedIn, searchVisible, onChangeMethod, onClickMethod } = this.props;
         return(
             <>
             <Navbar fixed='top' expand="lg" style={{backgroundColor: '#2C85A8'}}>
                 <div className="container">
                     <Navbar.Brand style={{color: 'white'}} href="/feed">Metropolitan Bazar</Navbar.Brand>
-                    <div hidden={searchVisible}>
+                    <div hidden={loggedIn}>
                         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="mr-auto">

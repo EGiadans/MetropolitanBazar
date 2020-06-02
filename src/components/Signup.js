@@ -77,7 +77,8 @@ class Signup extends React.Component {
             hashpassword: this.state.hashpassword,
             telephone: this.state.telephone,
             ine: 'null',
-            acta: 'null'
+            acta: 'null',
+            pimg: 'https://www.sackettwaconia.com/wp-content/uploads/default-profile.png'
         };
 
         console.log(user);
@@ -147,14 +148,14 @@ class Signup extends React.Component {
                                         </div>
 
                                         <button type="submit" className="btn mt-5"
-                                                style={{width: '40%', backgroundColor: '#80ffcc', color: 'white', fontSize: 20}}>
+                                                style={{width: '40%', backgroundColor: '#2C85A8', color: 'white', fontSize: 20}}>
                                             <b>Registrate</b>
                                         </button>
                                     </div>
                                 </form>
                                 <div style={{fontSize: 20, fontWeight: 'bold'}}>
                                     <p>¿Ya eres usuario?</p>
-                                    <Link to="/" style={{color: '#80ffcc', textAlign: 'center'}}>Inicia Sesión</Link>
+                                    <Link to="/" style={{color: '#2C85A8', textAlign: 'center'}}>Inicia Sesión</Link>
                                 </div>
                             </div>
                         </div>

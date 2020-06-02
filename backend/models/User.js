@@ -28,6 +28,10 @@ let userSchema = new Schema({
 
     acta: String,
 
+    pimg: {
+        type:String
+    },
+
     wishes: [{
         name: String,
         refId: String,

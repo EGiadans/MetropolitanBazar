@@ -2,15 +2,17 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import { Form } from "react-bootstrap";
 
-const MyInfo = ({name, lastname, email, password, onClicky, telephone}) => (
+
+const MyInfo = ({name, lastname, email, password, onClicky, telephone, pimg, onPimgChange}) => (
     <div className="container bg-light">
         <div className="row">
             <div className="col-sm-3">
                 <div className="my-5 mx-5">
-                    <img alt="profile" src="https://www.mediavisioninteractive.com/wp-content/uploads/2016/10/louis-profile-rounded-1.png"/>
+                    <img style={{ maxWidth: '150px' }} alt="profile" src={pimg}/>
                 </div>
                 <div className="align-content-center my-5 text-center">
-                    <Button variant="info" onClick={onClicky}>Cambiar imagen</Button>
+                    <Button onClick ={onClicky}>Cambiar Imagen</Button>
+                    <input onChange={onPimgChange} style={{display:'none'}} type="file" id="myimg"/>
                 </div>
             </div>
             <div className="col-sm-9">

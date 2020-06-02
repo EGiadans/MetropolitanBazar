@@ -25,12 +25,14 @@ class Profile extends React.Component {
             wishesLoaded: false,
             telephone: '',
             ine: '',
-            arrayIne: []
+            arrayIne: [],
+            pimg: []
         };
         this.onActaSubmit = this.onActaSubmit.bind(this);
         this.onActaChange = this.onActaChange.bind(this);
         this.onWishSubmit = this.onActaSubmit.bind(this);
         this.onWishChange = this.onActaChange.bind(this);
+        this.onPimgChange = this.onPimgChange.bind(this);
 
     }
 
@@ -39,6 +41,32 @@ class Profile extends React.Component {
             acta: e.target.files
         })
     }
+
+    onPimgChange(e){
+        const images  = [];
+        const newImage = e.target.files[0];
+        images.push(newImage);
+        this.setState({ pimg: images }, () => {
+            console.log(this.state.pimg,'image set');
+          }); 
+        const formData = new FormData();
+        images.forEach((file, i) => {
+            formData.append(i, file);
+        });
+        axios.post('http://localhost:4000/products/image-upload', formData,
+            {headers: { 'Content-Type': 'multipart/form-data' }}
+        ).then((res) => {
+            const image = res.data[0].url;
+            const user = UserProfile.getName('userId');
+            axios.put('http://localhost:4000/user/update-user/'+user,
+                {
+                    pimg: image
+                })
+                .then(() => {
+                    this.props.history.push("/profile");
+                });
+        })
+    };
 
     onWishChange(e){
         this.setState({
@@ -102,6 +130,7 @@ class Profile extends React.Component {
                     wishesLoaded: true,
                     telephone: response.data[0].telephone,
                     acta: response.data[0].acta,
+                    pimg: response.data[0].pimg,
                     ine: response.data[0].ine
                 });
                 UserProfile.setName('userId', response.data[0]._id)
@@ -115,18 +144,19 @@ class Profile extends React.Component {
     };
 
     showData = () => {
-      console.log(this.state);
+        document.getElementById('myimg').click();
+
     };
 
     render() {
         return (
             <>
-            <Navbar redirect={this.redirect}></Navbar>
+            <Navbar searchVisible={true} redirect={this.redirect}></Navbar>
             <div className="container">
                 <div className="my-5 py-3">
                     <Tabs style={{fontSize: 20}}>
                         <Tab style={{color: '#286DBF'}} eventKey="info" title="Mi Información">
-                            <MyInfo name={this.state.name} lastname={this.state.lastname} email={this.state.email} password={this.state.password} onClicky={this.showData} telephone={this.state.telephone}/>
+                            <MyInfo name={this.state.name} lastname={this.state.lastname} email={this.state.email} password={this.state.password} onClicky={this.showData} telephone={this.state.telephone} pimg={this.state.pimg} onPimgChange={this.onPimgChange}/>
                         </Tab>
                         <Tab eventKey="docs" title="Mis Documentos">
                             <MyDocs

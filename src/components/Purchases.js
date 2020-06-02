@@ -33,7 +33,7 @@ class Sales extends React.Component {
         const { sales } = this.state;
         return (
             <>
-                <Navbar redirect={this.redirect}/>
+                <Navbar searchVisible = {true} redirect={this.redirect}/>
                 <div className="container">
                     <div className="my-5 py-3">
                         <h1>Mis Compras</h1>
