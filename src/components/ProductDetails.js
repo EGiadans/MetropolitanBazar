@@ -132,9 +132,6 @@ class ProductDetails extends React.Component {
                                 <Button className="btn-success mr-3" onClick={this.handleShow}> <i className="fas fa-dollar-sign" />
                                     &nbsp;Comprar
                                 </Button>
-                                <Button onClick={() => this.showWishList()} className="btn-warning"><i className="fas fa-star"/>
-                                    &nbsp;Agregar a mi Wishlist
-                                </Button>
                             </div>
 
                         </div>
